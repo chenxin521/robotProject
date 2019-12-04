@@ -2565,10 +2565,10 @@
                         <!--                        <button class="btn btn-light" data-toggle="tooltip" title="Add files" type="button">-->
                         <!--                            <i data-feather="paperclip"></i>-->
                         <!--                        </button>-->
-                        <button class="btn btn-light d-sm-none d-block" data-toggle="tooltip"
-                                title="Send a voice record" type="button">
-                            <i data-feather="mic"></i>
-                        </button>
+<!--                        <button class="btn btn-light d-sm-none d-block" data-toggle="tooltip"-->
+<!--                                title="Send a voice record" type="button">-->
+<!--                            <i data-feather="mic"></i>-->
+<!--                        </button>-->
                         <input type="submit" value="发送">
 
                         {#
@@ -2760,7 +2760,8 @@
     <div class="form-membership2">
         <div class="form-wrapper">
             <!-- logo -->
-            <h5>Sign in</h5>
+            <h5>
+            <div class="register_login_img"></div></h5>
             <!-- form -->
             <form>
                 <div class="form-group">
@@ -2772,17 +2773,16 @@
                 <div class="form-group d-flex justify-content-between">
                     <div class="custom-control custom-checkbox">
                         <input type="checkbox" class="custom-control-input" checked="" id="customCheck11">
-                        <label class="custom-control-label" for="customCheck1">Remember me</label>
+                        <label class="custom-control-label" for="customCheck1">记住我</label>
                     </div>
-                    <a href="./reset-password.html">Reset password</a>
+                    <a href="./reset-password.html">重置密码</a>
                 </div>
-                <div class="my_btn_login">Sign in</div>
-                <hr>
-                <p id ="login_backtip">❀❀❀</p>
+                <div class="my_btn_login">登 录</div>
 
-                <hr>
-                <p class="text-muted">Don't have an account?</p>
-                <button class="btn btn-outline-light btn-sm" id="btn">Register now!</button>
+                <p id ="login_backtip"></p>
+                <hr/>
+                <p class="text-muted">还没有账号?</p>
+                <button class="btn btn-outline-light btn-sm" id="btn">立即注册</button>
             </form>
             <!-- ./ form -->
         </div>
@@ -2790,32 +2790,31 @@
 </div>
 
 <div class="register">
-    <div class="form-membership2">
+    <div class="form-membership0">
         <div class="form-wrapper">
-                <h5>Register</h5>
+                <h5><div class="register_login_img"></div></h5>
                 <!-- ./ register -->
                 <form>
                     <div class="form-group">
-                        <input type="text" class="form-control" id="register_name" placeholder="UseName" required autofocus>
+                        <input type="text" class="form-control" id="register_name" placeholder="用户名" required autofocus>
                     </div>
                     <div class="form-group">
-                        <input type="text" class="form-control" id="register_id" placeholder="StudentId" required>
+                        <input type="text" class="form-control" id="register_id" placeholder="学号" required>
                     </div>
                     <div class="form-group">
-                        <input type="email" class="form-control" id="register_email" placeholder="Email" required>
+                        <input type="email" class="form-control" id="register_email" placeholder="邮箱" required>
                     </div>
                     <div class="form-group">
-                        <input type="password" class="form-control" id="register_pass" placeholder="Password" required>
+                        <input type="password" class="form-control" id="register_pass" placeholder="密码" required>
                     </div>
                     <div class="form-group">
-                        <input type="password" class="form-control" id="last_pass" placeholder="LastPassword" required>
+                        <input type="password" class="form-control" id="last_pass" placeholder="确认密码" required>
                     </div>
-                    <div id="my_btn_register">Register</div>
+                    <div id="my_btn_register">注 册</div>
+                    <p id ="register_tip"></p>
                     <hr>
-                    <p id ="register_tip">❀❀❀</p>
-                    <hr>
-                    <p class="text-muted">Already have an account?</p>
-                    <button class="btn btn-outline-light btn-sm" id="backsign">Sign in!</button>
+                    <p class="text-muted">已有账户？</p>
+                    <button class="btn btn-outline-light btn-sm" id="backsign">立即登录</button>
                 </form>
                 <!-- ./ register -->
         </div>
@@ -2827,12 +2826,15 @@
     <div class="form-membership2">
         <div class="form-wrapper">
             <!-- logo -->
-            <h5>Sign out</h5>
+            <h5>
+                <div class="login_out_img"></div>
+            </h5>
             <!-- form -->
             <form>
                 <p id="logout_username"></p>
-                <div id="my_btn_out">Sign out</div>
+                <div id="my_btn_out">退出登录</div>
                 <hr>
+                <p>期待您再次回来哦！</p>
             </form>
             <!-- ./ form -->
         </div>
