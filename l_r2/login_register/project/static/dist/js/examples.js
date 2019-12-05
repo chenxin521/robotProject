@@ -239,3 +239,21 @@ $('.huikuang').on('click',function(event){
 $('.huikuang .form-membership2').click(function(event){
          event.stopPropagation();
   });
+
+//手机版点击出现简介框
+var ins = document.getElementsByClassName("ins")[0];
+var intr  = document.getElementsByClassName("introduction")[0];
+var tag=1
+ins.onclick=function (){
+    if(tag==1){
+        intr.style.display="block";
+        tag=0
+    }
+}
+
+intr.onclick=function(){
+    if(tag==0){
+        intr.style.display="none";
+        tag=1
+    }
+}
