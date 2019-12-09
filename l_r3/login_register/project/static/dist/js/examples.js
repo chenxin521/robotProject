@@ -51,8 +51,8 @@
         userId = '123';
         $('form#broadcast').submit(function(event) {
             // if ($('#broadcast_data').val()) {
-                socket.emit('my_broadcast_event', {data: $('#broadcast_data').val(),userId :'123',check:$("#cross4_out").text()});
-                console.log($("#cross4_out").text());
+                socket.emit('my_broadcast_event', {data: $('#broadcast_data').val(),userId :'123',check:$("#logout_username").text()});
+                console.log($("#logout_username").text());
                 // SohoExamle.Message.add($('#broadcast_data').val(), 'outgoing-message');
                 $('#broadcast_data').val('');
                 // SohoExamle.Message.add(userId, 'outgoing-message');
@@ -65,9 +65,11 @@
 
         socket.on('my_response', function(msg, cb) {
             console.log(msg);
-             SohoExamle.Message.add(msg.question,msg.username,msg.time2, 'outgoing-message');
+            $('#logout_username').val()
+
+            SohoExamle.Message.add(msg.question,msg.username,msg.time1, 'outgoing-message');//问题
             // if (msg.count%2==1){
-            SohoExamle.Message.add(msg.data,msg.username,msg.time1, '');
+            SohoExamle.Message.add(msg.data,msg.username,msg.time2, '');//回答
             // SohoExamle.Message.add(userId, '');
             if (cb)
                 cb();
@@ -303,7 +305,7 @@ var SohoExamle = {
 
 socket.on('add_histiry_event', function(msg, cb) {
         console.log(msg.two_re)
-        console.log(msg.three_re);
+        console.log(msg.username);
         SohoExamle.Message.add(msg.username,msg.one_time,msg.one1, 'outgoing-message');
         SohoExamle.Message.add(msg.username,msg.one_re_time,msg.one1_re, '');
         SohoExamle.Message.add(msg.username,msg.two_time,msg.two, 'outgoing-message');
