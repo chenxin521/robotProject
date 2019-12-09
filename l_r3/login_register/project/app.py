@@ -187,4 +187,4 @@ def get_register_message(message):
         emit("register_success_event", {'data': '注册成功'})
 
 if __name__ == '__main__':
-    socketio.run(app, debug=True)
+    socketio.run(app, debug=True,use_reloader=False)
