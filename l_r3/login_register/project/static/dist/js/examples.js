@@ -280,7 +280,7 @@ intr.onclick=function(){
 
 
 
-var SohoExamle = {
+var SohoExamle1 = {
         Message: {
             add: function (username,time,message, type) {
                 var chat_body = $('.layout .content .chat .chat-body');
@@ -323,12 +323,12 @@ var SohoExamle = {
 socket.on('add_histiry_event', function(msg, cb) {
         console.log(msg.two_re)
         console.log(msg.username);
-        SohoExamle.Message.add(msg.username,msg.one_time,msg.one1, 'outgoing-message');
-        SohoExamle.Message.add(msg.username,msg.one_re_time,msg.one1_re, '');
-        SohoExamle.Message.add(msg.username,msg.two_time,msg.two, 'outgoing-message');
-        SohoExamle.Message.add(msg.username,msg.two_re_time,msg.two_re, '');
-        SohoExamle.Message.add(msg.username,msg.three_time,msg.three, 'outgoing-message');
-        SohoExamle.Message.add(msg.username,msg.three_re_time,msg.three_re, '');
+        SohoExamle1.Message.add(msg.username,msg.one_time,msg.one1, 'outgoing-message');
+        SohoExamle1.Message.add(msg.username,msg.one_re_time,msg.one1_re, '');
+        SohoExamle1.Message.add(msg.username,msg.two_time,msg.two, 'outgoing-message');
+        SohoExamle1.Message.add(msg.username,msg.two_re_time,msg.two_re, '');
+        SohoExamle1.Message.add(msg.username,msg.three_time,msg.three, 'outgoing-message');
+        SohoExamle1.Message.add(msg.username,msg.three_re_time,msg.three_re, '');
     if (cb)
     cb();
 });

@@ -14,6 +14,8 @@ from project import user_record_mysql as recordMysql
 from datetime import datetime
 import pymysql
 import datetime
+import base64
+#import matplotlib.pyplot as plt
 # Set this variable to "threading", "eventlet" or "gevent" to test the
 # different async modes, or leave it set to None for the application to choose
 # the best option based on installed packages.
@@ -185,6 +187,11 @@ def get_register_message(message):
         #     emit("register_success_event", {'data': '注册成功'})
         print('注册成功')
         emit("register_success_event", {'data': '注册成功'})
+##图片转换
+@socketio.on('tran_img_event', namespace='/test')
+def tran_img_event(message):
+    img = base64.b64decode(message["data"])
+
 
 if __name__ == '__main__':
     socketio.run(app, debug=True,use_reloader=False)
