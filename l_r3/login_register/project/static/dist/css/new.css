@@ -457,7 +457,7 @@ input[type="submit"] {
 	height: 35px;
 	width: 45px;
 	background: url('../media/img/fly.png') no-repeat center;
-	background-color: #0A80FF;
+	background-color: #0a80ff;
 	cursor: pointer;
 	font-size: 0;
 	line-height: 0;
@@ -477,4 +477,12 @@ input[type="submit"] {
 	height: 48px;
 	background-size:100%;
 	margin: 0 auto;
+}
+
+#choose_img{
+	width: 50px;
+	height: 35px;
+	background-color: #0a80ff;
+	border-radius: 5px;
+	color: white;
 }
