@@ -260,7 +260,8 @@ $('.huikuang .form-membership2').click(function(event){
   });
 
 
-//手机版点击出现简介框
+/*********简介框******开始*****/
+//手机版点击简介弹出介绍框
 var ins = document.getElementsByClassName("ins")[0];
 var intr  = document.getElementsByClassName("introduction")[0];
 var tag=1
@@ -270,7 +271,6 @@ ins.onclick=function (){
         tag=0
     }
 }
-
 intr.onclick=function(){
     if(tag==0){
         intr.style.display="none";
@@ -278,7 +278,41 @@ intr.onclick=function(){
     }
 }
 
+//内容滚动
+var ul = document.getElementsByClassName("roll-content");
+function show() {
+    for(var i=0;i<ul.length;i++)
+    {
+        var top = ul[i].offsetTop - 1; //获取left值
+        ul[i].style.top = top + "px"; //设置left值
 
+        //走完一半再返回
+        if (-1 * ul[i].offsetTop >= ul[i].offsetHeight / 2) {
+            ul[i].style.top = 0;
+        }
+    }
+
+}
+var t = setInterval(show, 20);
+
+// li添加鼠标移入移出事件
+ var li = document.getElementsByClassName("roll-content");
+
+ var lis=li[1].children
+ // for (var j=0;j<li.length;j++){
+
+for (var i = 0; i < lis.length; i++) {
+        //移出事件
+
+    lis[i].onmouseout = function () {
+        t = setInterval(show, 20);
+    };
+        //移入事件
+    lis[i].onmouseover = function () {
+        clearInterval(t);
+    };
+}
+/*********简介框******结束*****/
 
 var SohoExamle1 = {
         Message: {
