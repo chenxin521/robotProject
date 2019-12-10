@@ -1,7 +1,9 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project version="4">
   <component name="ChangeListManager">
-    <list default="true" id="19471d7a-ce93-4dfd-97c9-9fff4b273e3d" name="Default Changelist" comment="" />
+    <list default="true" id="19471d7a-ce93-4dfd-97c9-9fff4b273e3d" name="Default Changelist" comment="shanl">
+      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+    </list>
     <option name="EXCLUDED_CONVERTED_TO_IGNORED" value="true" />
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -168,6 +170,7 @@
       <workItem from="1575902842158" duration="131000" />
       <workItem from="1575936588668" duration="610000" />
       <workItem from="1575974332605" duration="610000" />
+      <workItem from="1575978903815" duration="1204000" />
     </task>
     <task id="LOCAL-00001" summary="jia">
       <created>1575901751252</created>
@@ -229,7 +232,7 @@
     <option name="LAST_COMMIT_MESSAGE" value="shanl" />
   </component>
   <component name="com.intellij.coverage.CoverageDataManagerImpl">
-    <SUITE FILE_PATH="coverage/l_r3$app.coverage" NAME="app Coverage Results" MODIFIED="1575939121812" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$/login_register/project" />
+    <SUITE FILE_PATH="coverage/l_r3$app.coverage" NAME="app Coverage Results" MODIFIED="1575979999978" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$/login_register/project" />
     <SUITE FILE_PATH="coverage/l_r2$app.coverage" NAME="app Coverage Results" MODIFIED="1575458140538" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$/login_register/project" />
     <SUITE FILE_PATH="coverage/login_register1$app.coverage" NAME="app Coverage Results" MODIFIED="1575338190997" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$/login_register/project" />
     <SUITE FILE_PATH="coverage/l_r$app.coverage" NAME="app Coverage Results" MODIFIED="1575428268105" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$/login_register/project" />
