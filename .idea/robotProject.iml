@@ -5,8 +5,13 @@
       <sourceFolder url="file://$MODULE_DIR$/l_r2/login_register/project" isTestSource="false" />
       <sourceFolder url="file://$MODULE_DIR$/l_r2/login_register" isTestSource="false" />
       <sourceFolder url="file://$MODULE_DIR$/l_r2" isTestSource="false" />
+      <sourceFolder url="file://$MODULE_DIR$/l_r3/login_register/project" isTestSource="false" />
+      <sourceFolder url="file://$MODULE_DIR$/l_r3/login_register/.idea" isTestSource="false" />
+      <sourceFolder url="file://$MODULE_DIR$/l_r3/login_register" isTestSource="false" />
+      <sourceFolder url="file://$MODULE_DIR$/l_r3/.idea" isTestSource="false" />
+      <sourceFolder url="file://$MODULE_DIR$/l_r3" isTestSource="false" />
     </content>
-    <orderEntry type="jdk" jdkName="Python 3.7 (武永亮老师项目)" jdkType="Python SDK" />
+    <orderEntry type="jdk" jdkName="Python 3.5 (Avirtual)" jdkType="Python SDK" />
     <orderEntry type="sourceFolder" forTests="false" />
   </component>
   <component name="TemplatesService">

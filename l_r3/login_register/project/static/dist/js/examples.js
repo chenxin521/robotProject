@@ -45,6 +45,7 @@
         $('#pageTour').modal('show');
     }, 1000);
 
+
     $(document).ready(function() {
         namespace = '/test';
         var socket = io(namespace);
@@ -74,7 +75,6 @@
             if (cb)
                 cb();
         });
-
 
         //login in --submit
 
@@ -175,6 +175,22 @@ $("#my_btn_out").click(function () {
         $("#cross3").css("display","block");
         $("#cross4_out").text("");
         $("#cross4_out").css("display","none");
+        $('.layout .content .chat .chat-body .messages').html(
+                    `<div class="message-item ">
+                        <div class="message-avatar">
+                            <figure class="avatar">
+                                <img src="/static/dist/media/img/man_avatar3.jpg" class="rounded-circle" alt="image">
+                            </figure>
+                            <div>
+                                <h5>小软棉</h5>
+                                <div class="time"></div>
+                            </div>
+                        </div>
+                        <div class="message-content">
+                                欢迎来到你的私人小空间！小软棉已经等候您好久啦，快来和我聊天吧~ 😃
+                        </div>
+                        
+                    </div>`);
 });
 var cross4_out=document.getElementById("cross4_out");
 var logout=document.getElementsByClassName("logout")[0];
@@ -182,7 +198,6 @@ cross4_out.onclick=function(){
     console.log($(logout).css("display"))
     $(logout).css("z-index",0);
     $(logout).css("display","block");
-
 }
 $('.logout').on('click',function(event){
     //取消事件冒泡
@@ -244,6 +259,7 @@ $('.huikuang .form-membership2').click(function(event){
          event.stopPropagation();
   });
 
+
 //手机版点击出现简介框
 var ins = document.getElementsByClassName("ins")[0];
 var intr  = document.getElementsByClassName("introduction")[0];
@@ -303,6 +319,7 @@ var SohoExamle = {
         }
     };
 
+//登录后向聊天界面添加信息
 socket.on('add_histiry_event', function(msg, cb) {
         console.log(msg.two_re)
         console.log(msg.username);
@@ -315,3 +332,4 @@ socket.on('add_histiry_event', function(msg, cb) {
     if (cb)
     cb();
 });
+
