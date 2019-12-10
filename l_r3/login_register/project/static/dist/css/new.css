@@ -486,3 +486,20 @@ input[type="submit"] {
 	border-radius: 5px;
 	color: white;
 }
+
+#img_size{
+	width: 40%;
+	height: 40%;
+}
+#upload-input{
+	width: 40px;
+	height: 40px;
+}
+.message-content1{
+	width: auto;
+	background-color: #0a80ff;
+	border-radius: 5px;
+	padding-top: 10px;
+	padding-bottom: 10px;
+	padding-left: 20px;
+}
