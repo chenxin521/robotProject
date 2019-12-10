@@ -1,13 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project version="4">
   <component name="ChangeListManager">
-    <list default="true" id="19471d7a-ce93-4dfd-97c9-9fff4b273e3d" name="Default Changelist" comment="">
-      <change afterPath="$PROJECT_DIR$/login_register/project/static/dist/js/load_img.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/login_register/project/app.py" beforeDir="false" afterPath="$PROJECT_DIR$/login_register/project/app.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/login_register/project/static/dist/css/new.css" beforeDir="false" afterPath="$PROJECT_DIR$/login_register/project/static/dist/css/new.css" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/login_register/project/templates/index.html" beforeDir="false" afterPath="$PROJECT_DIR$/login_register/project/templates/index.html" afterDir="false" />
-    </list>
+    <list default="true" id="19471d7a-ce93-4dfd-97c9-9fff4b273e3d" name="Default Changelist" comment="" />
     <option name="EXCLUDED_CONVERTED_TO_IGNORED" value="true" />
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -171,7 +165,7 @@
       <workItem from="1575814816461" duration="3107000" />
       <workItem from="1575900468939" duration="33000" />
       <workItem from="1575901201858" duration="572000" />
-      <workItem from="1575939296642" duration="4917000" />
+      <workItem from="1575939296642" duration="5231000" />
     </task>
     <task id="LOCAL-00001" summary="jia">
       <created>1575901751252</created>
@@ -180,7 +174,21 @@
       <option name="project" value="LOCAL" />
       <updated>1575901751252</updated>
     </task>
-    <option name="localTasksCounter" value="2" />
+    <task id="LOCAL-00002" summary="load_img">
+      <created>1575947139884</created>
+      <option name="number" value="00002" />
+      <option name="presentableId" value="LOCAL-00002" />
+      <option name="project" value="LOCAL" />
+      <updated>1575947139884</updated>
+    </task>
+    <task id="LOCAL-00003" summary="load_img">
+      <created>1575947258742</created>
+      <option name="number" value="00003" />
+      <option name="presentableId" value="LOCAL-00003" />
+      <option name="project" value="LOCAL" />
+      <updated>1575947258742</updated>
+    </task>
+    <option name="localTasksCounter" value="4" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
@@ -201,7 +209,8 @@
   </component>
   <component name="VcsManagerConfiguration">
     <MESSAGE value="jia" />
-    <option name="LAST_COMMIT_MESSAGE" value="jia" />
+    <MESSAGE value="load_img" />
+    <option name="LAST_COMMIT_MESSAGE" value="load_img" />
   </component>
   <component name="com.intellij.coverage.CoverageDataManagerImpl">
     <SUITE FILE_PATH="coverage/l_r3$app.coverage" NAME="app Coverage Results" MODIFIED="1575947059010" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$/login_register/project" />
