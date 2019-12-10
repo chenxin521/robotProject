@@ -89,7 +89,7 @@ def get_message(message):
     else:
         results_text = response_dic['results'][0]['values']['text']
 
-    print(results_text)
+    print("怎么做："+results_text)
     session['receive_count'] = session.get('receive_count', 0) + 1
     time2 = datetime.datetime.now()
 

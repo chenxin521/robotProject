@@ -175,6 +175,22 @@ $("#my_btn_out").click(function () {
         $("#cross3").css("display","block");
         $("#cross4_out").text("");
         $("#cross4_out").css("display","none");
+        $('.layout .content .chat .chat-body .messages').html(
+                    `<div class="message-item ">
+                        <div class="message-avatar">
+                            <figure class="avatar">
+                                <img src="/static/dist/media/img/man_avatar3.jpg" class="rounded-circle" alt="image">
+                            </figure>
+                            <div>
+                                <h5>小软棉</h5>
+                                <div class="time"></div>
+                            </div>
+                        </div>
+                        <div class="message-content">
+                                欢迎来到你的私人小空间！小软棉已经等候您好久啦，快来和我聊天吧~ 😃
+                        </div>
+                        
+                    </div>`);
 });
 var cross4_out=document.getElementById("cross4_out");
 var logout=document.getElementsByClassName("logout")[0];
