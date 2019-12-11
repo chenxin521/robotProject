@@ -1,5 +1,9 @@
 input:focus{ outline: none;}
 input{outline:none;}
+ul,li,ol{
+    list-style: none;
+}
+
 .left_img{
     height:100%;
     width: 100%;
@@ -32,19 +36,79 @@ input{outline:none;}
 
 }
 .square{
-	padding-top: 15px;
+	padding-top: 35px;
 	padding-right: 5px;
 	list-style-type:none;
 	padding-left: 6px;
 }
-.inside-square{
-	padding-top: 15px;
+
+.inside-square1{
+	padding-top: 10px;
 	padding-left: 8px;
-	border: 2px #0A80FF solid;
+    border: 2px #0A80FF solid;
 	border-radius: 10px;
 	width: 300px;
-	height: 215px;
+	height: 270px;
 	font-family: "宋体";
+}
+.inside-square2{
+	padding-top: 20px;
+	padding-left: 6px;
+	/*border: 2px #0A80FF solid;*/
+	width: 300px;
+	height: 270px;
+	color: #fbfcfc;
+	font-family: '微软雅黑';
+
+}
+
+.inside-square3{
+	padding-top: 25px;
+	float: left;
+	height:225px;
+	width: 150px;
+	/*border: 1px black solid;*/
+	opacity: 0.5;
+	border-radius: 7px;
+	background-color: #0A80FF;
+}
+.inside-square3>p{
+	padding-left: 8px;
+	width: 135px;
+}
+.inside-square4{
+	padding-top: 25px;
+	float: left;
+	height:175px;
+	width: 300px;
+	opacity: 0.5;
+	border-radius: 7px;
+	background-color: #0A80FF;
+}
+.inside-square4>p{
+	padding-left: 8px;
+	width: 275px;
+}
+
+.roll{
+    position: relative;
+    overflow: hidden;
+    width: 280px;
+    height: 200px;
+
+}
+.roll-content{
+    top: 0;
+    font-size: 15px;
+    font-weight: bold;
+    color: #1d2124;
+	position: absolute;
+}
+.roll-content>li{
+    height: 30px;
+	padding-top: 10px;
+    float: top;
+
 }
 
 .try_p{
