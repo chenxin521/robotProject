@@ -15,7 +15,7 @@ from datetime import datetime
 import pymysql
 import datetime
 import base64
-#import matplotlib.pyplot as plt
+import matplotlib.pyplot as plt
 # Set this variable to "threading", "eventlet" or "gevent" to test the
 # different async modes, or leave it set to None for the application to choose
 # the best option based on installed packages.
