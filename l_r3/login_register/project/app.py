@@ -8,14 +8,16 @@ import json
 import urllib.request
 from project import user_information_mysql as informationMysql
 from project import user_record_mysql as recordMysql
-
+from project import competition3 as com
+from io import BytesIO
 # import project.user_information_mysql as informationMysql
 # import project.user_record_mysql as recordMysql
 from datetime import datetime
 import pymysql
 import datetime
 import base64
-#import matplotlib.pyplot as plt
+import matplotlib.pyplot as plt
+from PIL import Image
 # Set this variable to "threading", "eventlet" or "gevent" to test the
 # different async modes, or leave it set to None for the application to choose
 # the best option based on installed packages.
@@ -92,9 +94,6 @@ def get_message(message):
     print("怎么做："+results_text)
     session['receive_count'] = session.get('receive_count', 0) + 1
     time2 = datetime.datetime.now()
-
-
-
     # judge=get_login_message(message)
     # if judge>0:
     if(message['check']!=""):
@@ -102,7 +101,7 @@ def get_message(message):
              {'question': message['data'], 'username': message['check'], 'time1': time1.strftime('%Y-%m-%d %H:%M:%S'),
               'time2': time2.strftime('%Y-%m-%d %H:%M:%S'), 'data': results_text, 'count': session['receive_count']},
              broadcast=True)
-        recordMysql.record_create(message['check'], message['data'], results_text, time1, time2)
+        recordMysql.record_create(message['check'], message['data'], results_text, time1, time2,'0')
     else:
         emit('my_response',
              {'question': message['data'], 'username': '匿名用户', 'time1': time1.strftime('%Y-%m-%d %H:%M:%S'),
@@ -143,15 +142,27 @@ def get_record_message(username):
     db.close()
     print(results[-1], results[-2], results[-3])
     print(results[-2][2],results[-3][2])
-    emit("add_histiry_event", {'username': username, 'one1': results[-3][2], "one1_re": results[-3][3],
-                               'two': results[-2][2], "two_re": results[-2][3],
-                               'three': results[-1][2], "three_re": results[-1][3],
-                               "one_time": results[-3][4].strftime('%Y-%m-%d %H:%M:%S'),
-                               "one_re_time": results[-3][5].strftime('%Y-%m-%d %H:%M:%S'),
-                               "two_time": results[-2][4].strftime('%Y-%m-%d %H:%M:%S'),
-                               "two_re_time": results[-2][5].strftime('%Y-%m-%d %H:%M:%S'),
-                               "three_time": results[-1][4].strftime('%Y-%m-%d %H:%M:%S'),
-                               "three_re_time": results[-1][5].strftime('%Y-%m-%d %H:%M:%S')})
+    b=[]
+    c=-1
+    while(len(b)<3 and c>-5):
+        if(results[c][6]!='1'):
+            b.append(c)
+        c-=1
+    while(len(b)<3):
+        b.append(b[0])
+    print(b)
+    emit("add_histiry_event", {'username': username, 'one1': results[b[2]][2], "one1_re": results[b[2]][3],
+                               'two': results[b[1]][2], "two_re": results[b[1]][3],
+                               'three': results[b[0]][2], "three_re": results[b[0]][3],
+                               "one_time": results[b[2]][4].strftime('%Y-%m-%d %H:%M:%S'),
+                               "one_re_time": results[b[2]][5].strftime('%Y-%m-%d %H:%M:%S'),
+                               "two_time": results[b[1]][4].strftime('%Y-%m-%d %H:%M:%S'),
+                               "two_re_time": results[b[1]][5].strftime('%Y-%m-%d %H:%M:%S'),
+                               "three_time": results[b[0]][4].strftime('%Y-%m-%d %H:%M:%S'),
+                               "three_re_time": results[b[0]][5].strftime('%Y-%m-%d %H:%M:%S'),
+                               "one_flag":results[b[2]][6],
+                               "two_flag":results[b[1]][6],
+                               "three_flag":results[b[0]][6]})
 
     print(results[-1][4].strftime('%Y-%m-%d %H:%M:%S'),results[-2][4].strftime('%Y-%m-%d %H:%M:%S'),results[-3][4].strftime('%Y-%m-%d %H:%M:%S'))
     print(results[-1][5].strftime('%Y-%m-%d %H:%M:%S'), results[-2][5].strftime('%Y-%m-%d %H:%M:%S'), results[-3][5].strftime('%Y-%m-%d %H:%M:%S'))
@@ -190,7 +201,32 @@ def get_register_message(message):
 ##图片转换
 @socketio.on('tran_img_event', namespace='/test')
 def tran_img_event(message):
+    # print(type(message))
     img = base64.b64decode(message["data"])
+    file = open('1.jpg', "wb")
+    file.write(img)
+    file.close()
+    # img = Image.open(BytesIO(img))
+    # img.thumbnail((100, 100))  # 图片压缩
+    out = com.main('1.jpg')
+    #plt.imshow(img)
+    time1 = datetime.datetime.now()
+    time2 = datetime.datetime.now()
+    str2 = ''
+    out = str2.join(out)
+
+    if (message['check'] != ""):
+        emit('my_response',
+             {'username': '匿名用户', 'time1': time1.strftime('%Y-%m-%d %H:%M:%S'),
+              'time2': time2.strftime('%Y-%m-%d %H:%M:%S'), 'data': out},
+             broadcast=True)
+        print(message['data'])
+        recordMysql.record_create1(message['check'], message['data'], out, time1, time2, '1')
+    else:
+        emit('my_response',
+             {'username': '匿名用户', 'time1': time1.strftime('%Y-%m-%d %H:%M:%S'),
+              'time2': time2.strftime('%Y-%m-%d %H:%M:%S'), 'data': out},
+             broadcast=True)
 
 
 if __name__ == '__main__':

@@ -51,7 +51,8 @@ function showImg(input) {
         // document.getElementById('upload').src = e.target.result
         SohoExamle.Message.add(e.target.result, '传图片','2019-12-10 16:05:03 ','outgoing-message');
         a = e.target.result.substring( e.target.result.indexOf(",")+1);
-        socket.emit('tran_img_event', {data: a});
+
+        socket.emit('tran_img_event', {data: a,userId :'123',check:$("#logout_username").text()});
     }
 
     reader.readAsDataURL(file)
@@ -62,3 +63,4 @@ function showImg(input) {
 //     var url = window.URL.createObjectURL(file)
 //     document.getElemtById('upload').src = url
 // }
+

@@ -51,9 +51,26 @@
         userId = '123';
         $('form#broadcast').submit(function(event) {
             // if ($('#broadcast_data').val()) {
+            var now = new Date();
+            var year = now.getFullYear(); //得到年份
+            var month = now.getMonth();//得到月份
+            var date = now.getDate();//得到日期
+            var hour = now.getHours();//得到小时
+            var minu = now.getMinutes();//得到分钟
+            var sec = now.getSeconds();//得到秒
+            month = month + 1;
+            if (month < 10) month = "0" + month;
+            if (date < 10) date = "0" + date;
+            if (hour < 10) hour = "0" + hour;
+            if (minu < 10) minu = "0" + minu;
+            if (sec < 10) sec = "0" + sec;
+            var time = "";
+         time = year + "-" + month + "-" + date + "" + " " + hour + ":" + minu + ":" + sec
                 socket.emit('my_broadcast_event', {data: $('#broadcast_data').val(),userId :'123',check:$("#logout_username").text()});
                 console.log($("#logout_username").text());
-                // SohoExamle.Message.add($('#broadcast_data').val(), 'outgoing-message');
+                if($("#logout_username").text()=="")
+                    SohoExamle.Message.add($('#broadcast_data').val(), "匿名用户",time,'outgoing-message');
+                SohoExamle.Message.add($('#broadcast_data').val(), $("#logout_username").text(),time,'outgoing-message');
                 $('#broadcast_data').val('');
                 // SohoExamle.Message.add(userId, 'outgoing-message');
             //     input.val('');
@@ -64,11 +81,11 @@
         });
 
         socket.on('my_response', function(msg, cb) {
-            console.log(msg);
-            $('#logout_username').val()
-
-            SohoExamle.Message.add(msg.question,msg.username,msg.time1, 'outgoing-message');//问题
-            // if (msg.count%2==1){
+            //             console.log(msg);
+            //             $('#logout_username').val()
+            //
+            //             SohoExamle.Message.add(msg.question,msg.username,msg.time1, 'outgoing-message');//问题
+            //             // if (msg.count%2==1){
             SohoExamle.Message.add(msg.data,msg.username,msg.time2, '');//回答
             // SohoExamle.Message.add(userId, '');
             if (cb)
@@ -357,6 +374,10 @@ var SohoExamle1 = {
 socket.on('add_histiry_event', function(msg, cb) {
         console.log(msg.two_re)
         console.log(msg.username);
+        // if(msg.one_flag=="1")
+        //     console.log("msg.one_flag==\"1\"")
+        //     imageData = 'data:image/png;base64,' + msg.one1
+        //     SohoExamle.Message.add(imageData, msg.username,msg.one_time, 'outgoing-message');
         SohoExamle1.Message.add(msg.username,msg.one_time,msg.one1, 'outgoing-message');
         SohoExamle1.Message.add(msg.username,msg.one_re_time,msg.one1_re, '');
         SohoExamle1.Message.add(msg.username,msg.two_time,msg.two, 'outgoing-message');

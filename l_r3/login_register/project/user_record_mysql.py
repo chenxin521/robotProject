@@ -4,7 +4,7 @@ import project.app
 from datetime import datetime
 
 #创建数据库中的用户信息表
-def record_create(userId,inputText,tulingRespose,time1,time2):
+def record_create(userId,inputText,tulingRespose,time1,time2,flag):
     db = pymysql.connect(host='localhost',user='root',database='user_information',charset='utf8')
     cursor = db.cursor()
     #cursor.execute("DROP TABLE IF EXISTS record")3
@@ -16,19 +16,42 @@ def record_create(userId,inputText,tulingRespose,time1,time2):
                  TULINGRESPOSE VARCHAR(50),
                  TIME1 DATETIME,
                  TIME2 DATETIME,
+                 FLAG  VARCHAR(10),
                  primary key(ID)
                  ) default charset='utf8'"""
         cursor.execute(sql)
     except InternalError:#若报表已经存在的错误则直接插入,否则先创建表再插入
         pass
-    record_insert(userId,inputText,tulingRespose,time1,time2)
+    record_insert(userId,inputText,tulingRespose,time1,time2,flag)
+    db.close()
+
+####长
+def record_create1(userId,inputText,tulingRespose,time1,time2,flag):
+    db = pymysql.connect(host='localhost',user='root',database='user_information',charset='utf8')
+    cursor = db.cursor()
+    #cursor.execute("DROP TABLE IF EXISTS record")3
+    try:
+        sql = """CREATE TABLE record(
+                 ID int(5) NOT NULL auto_increment,#以自增序列为主键
+                 USERID VARCHAR(10),
+                 INPUTTEXT VARCHAR(50),
+                 TULINGRESPOSE LONGTEXT,
+                 TIME1 DATETIME,
+                 TIME2 DATETIME,
+                 FLAG  VARCHAR(10),
+                 primary key(ID)
+                 ) default charset='utf8'"""
+        cursor.execute(sql)
+    except InternalError:#若报表已经存在的错误则直接插入,否则先创建表再插入
+        pass
+    record_insert(userId,inputText,tulingRespose,time1,time2,flag)
     db.close()
 
 #给数据库中的用户信息表插入数据
-def record_insert(userId,inputText,tulingRespose,time1,time2):
+def record_insert(userId,inputText,tulingRespose,time1,time2,flag):
     db = pymysql.connect(host='localhost',user='root',database='user_information',charset='utf8')
     cursor = db.cursor()
-    sql = "INSERT INTO record(USERID,INPUTTEXT,TULINGRESPOSE,TIME1,TIME2)VALUES ('%s','%s','%s','%s','%s')"%(userId,inputText,tulingRespose,time1,time2)
+    sql = "INSERT INTO record(USERID,INPUTTEXT,TULINGRESPOSE,TIME1,TIME2,FLAG)VALUES ('%s','%s','%s','%s','%s','%s')"%(userId,inputText,tulingRespose,time1,time2,flag)
     #print(sql)
     cursor.execute(sql)  # 执行sql语句
     db.commit()  # 提交到数据库执行
