@@ -8,14 +8,16 @@ import json
 import urllib.request
 from project import user_information_mysql as informationMysql
 from project import user_record_mysql as recordMysql
-
+from project import class_schedule_mysql as scheduleMysql
 # import project.user_information_mysql as informationMysql
 # import project.user_record_mysql as recordMysql
 from datetime import datetime
 import pymysql
 import datetime
-import base64
-#import matplotlib.pyplot as plt
+import re
+
+import time
+import math
 # Set this variable to "threading", "eventlet" or "gevent" to test the
 # different async modes, or leave it set to None for the application to choose
 # the best option based on installed packages.
@@ -84,8 +86,42 @@ def get_message(message):
     response_str = response.read().decode('utf8')
     response_dic = json.loads(response_str)
 
-    if "怎么做" in message['data']:
+    #计算现在是第几周的代码
+    today = datetime.date.today()
+    date1 = time.strptime('2019-09-02', "%Y-%m-%d")
+    date2 = time.strptime(str(today), "%Y-%m-%d")
+    date1 = datetime.datetime(date1[0], date1[1], date1[2])
+    date2 = datetime.datetime(date2[0], date2[1], date2[2])
+    # 返回两个变量相差的值，就是相差天数
+    days_number = (date2 - date1).days
+    #print(type(days_number))
+    #得到这周是多少周
+    this_week = math.ceil(days_number / 7)
+    print(type(this_week))
+    #print(days_number, this_week)
+    # 这是2017级查询
+    if re.search('\w+方向',message['data']):
+        if re.search('\d\d\d\d级',message['data'])and re.search('\d-\d班',message['data']) and re.search('星期\D{1}',message['data']):
+            grade = re.findall('\d\d\d\d级', message['data'])
+            class1 = re.findall('\d-\d班', message['data'])
+            day = re.findall('星期\D', message['data'])
+            direction = re.findall('\w+方向', message['data'])
+            # print(grade, class1, day, direction, str(this_week))
+            # print(grade[0], class1[0], str(this_week), day[0],direction[0])
+            results_text = scheduleMysql.class_schedule_query1(grade[0], class1[0], str(this_week), day[0],direction[0])
+            # print('我是调用的第二个函数')
+    #询问某道菜怎么做时，直接返回url
+    elif "怎么做" in message['data']:
         results_text = response_dic['results'][0]['values']['url']
+    # #这是2018和2019级查询
+    elif re.search('\d\d\d\d级',message['data']) and re.search('[1-8]班',message['data']) and re.search('星期\D{1}',message['data']):
+        grade = re.findall('\d\d\d\d级', message['data'])
+        class1 = re.findall('[1-8]班', message['data'])
+        #week = re.findall('\d{1,2}周', message['data'])
+        day = re.findall('星期\D', message['data'])
+        #print(type(scheduleMysql.class_schedule_query(grade[0],class1[0],week[0],day[0])))
+        results_text=scheduleMysql.class_schedule_query(grade[0],class1[0],str(this_week),day[0])
+        # print('我是第一个函数')
     else:
         results_text = response_dic['results'][0]['values']['text']
 
