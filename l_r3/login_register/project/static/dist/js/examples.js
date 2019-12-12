@@ -163,6 +163,7 @@ $("#my_btn_out").click(function () {
         $(logout).css("display","none");
         $("#login_backtip").text("");
         $("#cross3").css("display","block");
+        $("#logout_username").text("");
         $("#cross4_out").text("");
         $("#cross4_out").css("display","none");
         time=get_time()
