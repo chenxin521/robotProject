@@ -264,18 +264,12 @@ $('.huikuang .form-membership2').click(function(event){
 //手机版点击简介弹出介绍框
 var ins = document.getElementsByClassName("ins")[0];
 var intr  = document.getElementsByClassName("introduction")[0];
-var tag=1
+var chat=document.getElementsByClassName("chat-body")[0];
 ins.onclick=function (){
-    if(tag==1){
-        intr.style.display="block";
-        tag=0
-    }
+    intr.style.display="block";
 }
-intr.onclick=function(){
-    if(tag==0){
-        intr.style.display="none";
-        tag=1
-    }
+chat.onclick=function(){
+    intr.style.display="none";
 }
 
 //内容滚动
@@ -302,16 +296,51 @@ var t = setInterval(show, 20);
  // for (var j=0;j<li.length;j++){
 
 for (var i = 0; i < lis.length; i++) {
-        //移出事件
+    //移出事件
 
     lis[i].onmouseout = function () {
         t = setInterval(show, 20);
     };
-        //移入事件
+    //移入事件
     lis[i].onmouseover = function () {
         clearInterval(t);
     };
 }
+
+var ban1=document.getElementsByClassName("class1")[0];
+var grade=document.getElementsByClassName("grade")[0];
+var point=document.getElementsByClassName("point")[0];
+grade.onchange=function(){
+    var text=grade.options[grade.selectedIndex].text;
+
+    if(text=="大三"){
+        point.style.display="block";
+        ban1.style.display="none";
+    }
+    else{
+        ban1.style.display="block";
+        point.style.display="none";
+    }
+}
+
+var ban2=document.getElementsByClassName("class2")[0];
+var grade2=document.getElementsByClassName("grade2")[0];
+var point2=document.getElementsByClassName("point2")[0];
+grade2.onchange=function(){
+    var text=grade2.options[grade2.selectedIndex].text;
+    console.log(text)
+    if(text=="大三"){
+        point2.style.display="block";
+        ban2.style.display="none";
+    }
+    else{
+        ban2.style.display="block";
+        point2.style.display="none";
+    }
+}
+
+
+
 /*********简介框******结束*****/
 
 var SohoExamle1 = {
