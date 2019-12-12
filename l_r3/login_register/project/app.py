@@ -45,12 +45,11 @@ def index():
 # {'data': message['data'], 'count': session['receive_count']},
 
 
-#tuling='3d3fa6b66f72479eaa9c45be57b639e0'  #老师的
-tuling='e238e5b6de7545fc886720c0d175cb79'    #自己的
-# b9c94835bf924281b681248828c006d1
+tuling='3d3fa6b66f72479eaa9c45be57b639e0'  #老师的
+#tuling='e238e5b6de7545fc886720c0d175cb79'    #自己的
 api_url = "http://openapi.tuling123.com/openapi/api/v2"
 
-flag = ''
+
 @socketio.on('my_broadcast_event', namespace='/test')
 def get_message(message):
     time1=datetime.datetime.now()
@@ -75,8 +74,7 @@ def get_message(message):
     },
     "userInfo":
     {
-        "apiKey": 'b9c94835bf924281b681248828c006d1',
-        #"apiKey": '3d3fa6b66f72479eaa9c45be57b639e0',
+        "apiKey": '3d3fa6b66f72479eaa9c45be57b639e0',
         "userId": message['userId']
     }
     }
@@ -86,20 +84,15 @@ def get_message(message):
     response_str = response.read().decode('utf8')
     response_dic = json.loads(response_str)
 
-    # if "怎么做" in message['data']:
-    #     results_text = response_dic['results'][0]['values']
-    #     #results_text = response_dic['intent']['code']
-    # elif "图片" in message['data']:
-    #     results_text = response_dic['results'][0]['values']['image']
-    # else:
+    if "怎么做" in message['data']:
+        results_text = response_dic['results'][0]['values']['url']
+    else:
+        results_text = response_dic['results'][0]['values']['text']
 
-    print(response_dic)
-    results_text = response_dic['results'][0]['values']['text']
-
-    #print("怎么做：" + results_text)
-
+    print("怎么做："+results_text)
     session['receive_count'] = session.get('receive_count', 0) + 1
     time2 = datetime.datetime.now()
+
 
 
     # judge=get_login_message(message)
@@ -136,8 +129,6 @@ def get_login_message(message):
         else:
             emit("login_backtips_event", {'data': '密码错误！'})
             return 0#[0,False]
-
-
 #得到登陆用户的聊天记录
 def get_record_message(username):
     db = pymysql.connect(host='localhost', user='root', database='user_information', charset='utf8')

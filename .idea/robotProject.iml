@@ -10,8 +10,9 @@
       <sourceFolder url="file://$MODULE_DIR$/l_r3/login_register" isTestSource="false" />
       <sourceFolder url="file://$MODULE_DIR$/l_r3/.idea" isTestSource="false" />
       <sourceFolder url="file://$MODULE_DIR$/l_r3" isTestSource="false" />
+      <sourceFolder url="file://$MODULE_DIR$/l_r3/login_register/project/templates" isTestSource="false" />
     </content>
-    <orderEntry type="jdk" jdkName="Python 3.8 (venv_ana_3.7)" jdkType="Python SDK" />
+    <orderEntry type="jdk" jdkName="Python 3.5 (venv) (8)" jdkType="Python SDK" />
     <orderEntry type="sourceFolder" forTests="false" />
   </component>
   <component name="TemplatesService">
