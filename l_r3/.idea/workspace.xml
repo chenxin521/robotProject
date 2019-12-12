@@ -6,6 +6,7 @@
       <change beforePath="$PROJECT_DIR$/.idea/misc.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/misc.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/login_register/project/app.py" beforeDir="false" afterPath="$PROJECT_DIR$/login_register/project/app.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/login_register/project/class_schedule_mysql.py" beforeDir="false" afterPath="$PROJECT_DIR$/login_register/project/class_schedule_mysql.py" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/login_register/project/static/dist/js/examples.js" beforeDir="false" afterPath="$PROJECT_DIR$/login_register/project/static/dist/js/examples.js" afterDir="false" />
     </list>
     <option name="EXCLUDED_CONVERTED_TO_IGNORED" value="true" />
@@ -47,7 +48,7 @@
     <property name="node.js.path.for.package.tslint" value="project" />
     <property name="node.js.selected.package.eslint" value="(autodetect)" />
     <property name="node.js.selected.package.tslint" value="(autodetect)" />
-    <property name="settings.editor.selected.configurable" value="project.propVCSSupport.Mappings" />
+    <property name="settings.editor.selected.configurable" value="com.jetbrains.python.configuration.PyActiveSdkModuleConfigurable" />
   </component>
   <component name="RunDashboard">
     <option name="ruleStates">
@@ -135,9 +136,9 @@
     </list>
     <recent_temporary>
       <list>
+        <item itemvalue="Python.app" />
         <item itemvalue="Python.user_record_mysql" />
         <item itemvalue="Python.user_information_mysql" />
-        <item itemvalue="Python.app" />
         <item itemvalue="Python.user_record_mysql" />
         <item itemvalue="Python.user_information_mysql" />
       </list>
@@ -178,6 +179,7 @@
       <workItem from="1576025503416" duration="8090000" />
       <workItem from="1576044724067" duration="9242000" />
       <workItem from="1576109556989" duration="221000" />
+      <workItem from="1576110888724" duration="3211000" />
     </task>
     <task id="LOCAL-00001" summary="jia">
       <created>1575901751252</created>
@@ -240,7 +242,7 @@
   </component>
   <component name="com.intellij.coverage.CoverageDataManagerImpl">
     <SUITE FILE_PATH="coverage/l_r3$user_record_mysql.coverage" NAME="user_record_mysql Coverage Results" MODIFIED="1575810888887" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$/login_register/project" />
-    <SUITE FILE_PATH="coverage/l_r3$app.coverage" NAME="app Coverage Results" MODIFIED="1576055711524" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$/login_register/project" />
+    <SUITE FILE_PATH="coverage/l_r3$app.coverage" NAME="app Coverage Results" MODIFIED="1576117126005" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$/login_register/project" />
     <SUITE FILE_PATH="coverage/l_r2$app.coverage" NAME="app Coverage Results" MODIFIED="1575458140538" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$/login_register/project" />
     <SUITE FILE_PATH="coverage/login_register1$app.coverage" NAME="app Coverage Results" MODIFIED="1575338190997" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$/login_register/project" />
     <SUITE FILE_PATH="coverage/l_r3$user_information_mysql.coverage" NAME="user_information_mysql Coverage Results" MODIFIED="1575810862408" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$/login_register/project" />

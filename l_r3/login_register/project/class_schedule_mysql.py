@@ -18,6 +18,7 @@ def class_schedule_query(grade,class1,this_week,day):   #grade是用户所在的
     try:
         cursor.execute(sql)  # 执行SQL语句
         results=cursor.fetchall()  # 获取所有记录元组
+        print(results)
         result1=[]
         print(len(results))
         for i in range(len(results)):

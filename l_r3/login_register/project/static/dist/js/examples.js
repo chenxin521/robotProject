@@ -52,8 +52,8 @@
         userId = '123';
         $('form#broadcast').submit(function(event) {
             if ($('#broadcast_data').val()) {
-                if(($('#broadcast_data').val()).match("课表")) {
-                    socket.emit('my_broadcast_event2', {data: $('#broadcast_data').val(),userId :'123',check:$("#logout_username").text()});
+                if((($('#broadcast_data').val()).match("2017级"))||(($('#broadcast_data').val()).match("2018级"))||(($('#broadcast_data').val()).match("2019级"))) {
+                    socket.emit('my_broadcast_table_event', {data: $('#broadcast_data').val(),userId :'123',check:$("#logout_username").text()});
                     $('#broadcast_data').val('');
                 }
                 else{
