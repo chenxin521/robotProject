@@ -51,18 +51,32 @@
         var socket = io(namespace);
         userId = '123';
         $('form#broadcast').submit(function(event) {
-            // if ($('#broadcast_data').val()) {
-                socket.emit('my_broadcast_event', {data: $('#broadcast_data').val(),userId :'123',check:$("#logout_username").text()});
-                console.log($("#logout_username").text());
-                // SohoExamle.Message.add($('#broadcast_data').val(), 'outgoing-message');
-                $('#broadcast_data').val('');
-                // SohoExamle.Message.add(userId, 'outgoing-message');
-            //     input.val('');
-            // } else {
-            //     input.focus();
-            // }
+            if ($('#broadcast_data').val()) {
+                if(($('#broadcast_data').val()).match("课表")) {
+                    socket.emit('my_broadcast_event2', {data: $('#broadcast_data').val(),userId :'123',check:$("#logout_username").text()});
+                    $('#broadcast_data').val('');
+                }
+                else{
+                    socket.emit('my_broadcast_event', {data: $('#broadcast_data').val(),userId :'123',check:$("#logout_username").text()});
+                    $('#broadcast_data').val('');
+                }
+             }
+
+            // // if ($('#broadcast_data').val()) {
+            //     socket.emit('my_broadcast_event', {data: $('#broadcast_data').val(),userId :'123',check:$("#logout_username").text()});
+            //     console.log($("#logout_username").text());
+            //     socket.emit('my_broadcast_event2', {data: $('#broadcast_data').val(),userId :'123',check:$("#logout_username").text()});
+            //     // SohoExamle.Message.add($('#broadcast_data').val(), 'outgoing-message');
+            //     $('#broadcast_data').val('');
+            //     // SohoExamle.Message.add(userId, 'outgoing-message');
+            // //     input.val('');
+            // // } else {
+            // //     input.focus();
+            // // }
             return false;
         });
+
+
 
         socket.on('my_response', function(msg, cb) {
             console.log(msg);
@@ -277,14 +291,14 @@ intr.onclick=function(){
         tag=1
     }
 }
-
+//****轮播图*****
 //内容滚动
 var ul = document.getElementsByClassName("roll-content");
 function show() {
     for(var i=0;i<ul.length;i++)
     {
-        var top = ul[i].offsetTop - 1; //获取left值
-        ul[i].style.top = top + "px"; //设置left值
+        var top = ul[i].offsetTop - 1; //获取top值
+        ul[i].style.top = top + "px"; //设置top值
 
         //走完一半再返回
         if (-1 * ul[i].offsetTop >= ul[i].offsetHeight / 2) {
@@ -314,6 +328,7 @@ for (var i = 0; i < lis.length; i++) {
 }
 /*********简介框******结束*****/
 
+/*********登录后向聊天界面添加历史信息******开始*****/
 var SohoExamle1 = {
         Message: {
             add: function (username,time,message, type) {
@@ -366,4 +381,5 @@ socket.on('add_histiry_event', function(msg, cb) {
     if (cb)
     cb();
 });
+/*********登录后向聊天界面添加历史信息******结束*****/
 

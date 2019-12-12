@@ -1,8 +1,12 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project version="4">
   <component name="ChangeListManager">
-    <list default="true" id="19471d7a-ce93-4dfd-97c9-9fff4b273e3d" name="Default Changelist" comment="shanl">
+    <list default="true" id="19471d7a-ce93-4dfd-97c9-9fff4b273e3d" name="Default Changelist" comment="">
+      <change beforePath="$PROJECT_DIR$/.idea/login_register.iml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/login_register.iml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/misc.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/misc.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/login_register/project/app.py" beforeDir="false" afterPath="$PROJECT_DIR$/login_register/project/app.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/login_register/project/static/dist/js/examples.js" beforeDir="false" afterPath="$PROJECT_DIR$/login_register/project/static/dist/js/examples.js" afterDir="false" />
     </list>
     <option name="EXCLUDED_CONVERTED_TO_IGNORED" value="true" />
     <option name="SHOW_DIALOG" value="false" />
@@ -65,7 +69,7 @@
       <envs>
         <env name="PYTHONUNBUFFERED" value="1" />
       </envs>
-      <option name="SDK_HOME" value="F:\anaconda-after\envs\venv_ana_3.7\python.exe" />
+      <option name="SDK_HOME" value="F:\Aproject\Avirtual\Scripts\python.exe" />
       <option name="WORKING_DIRECTORY" value="$PROJECT_DIR$/login_register/project" />
       <option name="IS_MODULE_SDK" value="false" />
       <option name="ADD_CONTENT_ROOTS" value="true" />
@@ -131,9 +135,9 @@
     </list>
     <recent_temporary>
       <list>
-        <item itemvalue="Python.app" />
         <item itemvalue="Python.user_record_mysql" />
         <item itemvalue="Python.user_information_mysql" />
+        <item itemvalue="Python.app" />
         <item itemvalue="Python.user_record_mysql" />
         <item itemvalue="Python.user_information_mysql" />
       </list>
@@ -171,6 +175,9 @@
       <workItem from="1575936588668" duration="610000" />
       <workItem from="1575974332605" duration="610000" />
       <workItem from="1575978903815" duration="1204000" />
+      <workItem from="1576025503416" duration="8090000" />
+      <workItem from="1576044724067" duration="9242000" />
+      <workItem from="1576109556989" duration="221000" />
     </task>
     <task id="LOCAL-00001" summary="jia">
       <created>1575901751252</created>
@@ -232,12 +239,12 @@
     <option name="LAST_COMMIT_MESSAGE" value="shanl" />
   </component>
   <component name="com.intellij.coverage.CoverageDataManagerImpl">
-    <SUITE FILE_PATH="coverage/l_r3$app.coverage" NAME="app Coverage Results" MODIFIED="1575979999978" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$/login_register/project" />
+    <SUITE FILE_PATH="coverage/l_r3$user_record_mysql.coverage" NAME="user_record_mysql Coverage Results" MODIFIED="1575810888887" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$/login_register/project" />
+    <SUITE FILE_PATH="coverage/l_r3$app.coverage" NAME="app Coverage Results" MODIFIED="1576055711524" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$/login_register/project" />
     <SUITE FILE_PATH="coverage/l_r2$app.coverage" NAME="app Coverage Results" MODIFIED="1575458140538" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$/login_register/project" />
     <SUITE FILE_PATH="coverage/login_register1$app.coverage" NAME="app Coverage Results" MODIFIED="1575338190997" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$/login_register/project" />
-    <SUITE FILE_PATH="coverage/l_r$app.coverage" NAME="app Coverage Results" MODIFIED="1575428268105" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$/login_register/project" />
-    <SUITE FILE_PATH="coverage/l_r3$user_record_mysql.coverage" NAME="user_record_mysql Coverage Results" MODIFIED="1575810888887" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$/login_register/project" />
     <SUITE FILE_PATH="coverage/l_r3$user_information_mysql.coverage" NAME="user_information_mysql Coverage Results" MODIFIED="1575810862408" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$/login_register/project" />
     <SUITE FILE_PATH="coverage/login_register$app.coverage" NAME="app Coverage Results" MODIFIED="1575129043075" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$/login_register/project" />
+    <SUITE FILE_PATH="coverage/l_r$app.coverage" NAME="app Coverage Results" MODIFIED="1575428268105" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$/login_register/project" />
   </component>
 </project>
