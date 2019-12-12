@@ -3,7 +3,9 @@ from pymysql import InternalError
 import project.app
 from datetime import datetime
 
-#创建数据库中的用户信息表
+# 创建数据库中的用户信息表
+
+
 def record_create(userId,inputText,tulingRespose,time1,time2,flag):
     db = pymysql.connect(host='localhost',user='root',database='user_information',charset='utf8')
     cursor = db.cursor()
@@ -25,7 +27,9 @@ def record_create(userId,inputText,tulingRespose,time1,time2,flag):
     record_insert(userId,inputText,tulingRespose,time1,time2,flag)
     db.close()
 
-####长
+# 长
+
+
 def record_create1(userId,inputText,tulingRespose,time1,time2,flag):
     db = pymysql.connect(host='localhost',user='root',database='user_information',charset='utf8')
     cursor = db.cursor()
@@ -47,18 +51,21 @@ def record_create1(userId,inputText,tulingRespose,time1,time2,flag):
     record_insert(userId,inputText,tulingRespose,time1,time2,flag)
     db.close()
 
-#给数据库中的用户信息表插入数据
+# 给数据库中的用户信息表插入数据
+
+
 def record_insert(userId,inputText,tulingRespose,time1,time2,flag):
     db = pymysql.connect(host='localhost',user='root',database='user_information',charset='utf8')
     cursor = db.cursor()
     sql = "INSERT INTO record(USERID,INPUTTEXT,TULINGRESPOSE,TIME1,TIME2,FLAG)VALUES ('%s','%s','%s','%s','%s','%s')"%(userId,inputText,tulingRespose,time1,time2,flag)
-    #print(sql)
     cursor.execute(sql)  # 执行sql语句
     db.commit()  # 提交到数据库执行
     db.rollback()  # 如果发生错误则回滚
     db.close()
 
-#删除数据库用户信息表中的某个记录
+#  删除数据库用户信息表中的某个记录
+
+
 def record_delete(userId,inputText,tulingRespose):
     db = pymysql.connect(host='localhost',user='root',database='user_information',charset='utf8')
     cursor = db.cursor()
@@ -67,7 +74,9 @@ def record_delete(userId,inputText,tulingRespose):
     db.rollback()
     db.close()
 
-#更新数据库的某些记录
+#  更新数据库的某些记录
+
+
 def record_update(userId,inputText,tulingRespose):
     db = pymysql.connect(host='localhost',user='root',database='user_information',charset='utf8')
     cursor = db.cursor()
@@ -77,7 +86,9 @@ def record_update(userId,inputText,tulingRespose):
     db.rollback()
     db.close()
 
-#查询数据库某表中的某一记录内容
+# 查询数据库某表中的某一记录内容
+
+
 def record_query(userId):
     db = pymysql.connect(host='localhost',user='root',database='user_information',charset='utf8')
     cursor = db.cursor()

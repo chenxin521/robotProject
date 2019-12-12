@@ -67,6 +67,7 @@ def information_query(username):
         print("Error: unable to fetch data")
     db.close()
     return return_password
+
 #查询用户列表中的某一记录内容（根据学号）
 def information_query_sid(studentid):
     return_password=[]

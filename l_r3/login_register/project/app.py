@@ -8,33 +8,25 @@ import json
 import urllib.request
 from project import user_information_mysql as informationMysql
 from project import user_record_mysql as recordMysql
-from project import competition3 as com
-from io import BytesIO
-# import project.user_information_mysql as informationMysql
-# import project.user_record_mysql as recordMysql
+from project import zyq
 from datetime import datetime
 import pymysql
 import datetime
 import base64
-import matplotlib.pyplot as plt
-from PIL import Image
+
 # Set this variable to "threading", "eventlet" or "gevent" to test the
 # different async modes, or leave it set to None for the application to choose
 # the best option based on installed packages.
 async_mode = None
-
 app = Flask(__name__)
 app.config['SECRET_KEY'] = 'secret!'
 socketio = SocketIO(app, async_mode=async_mode)
 thread = None
 thread_lock = Lock()
-
-#
 @app.route('/')
 def index():
     return render_template('index.html', async_mode=socketio.async_mode)
-
-
+##先留着
 # @socketio.on('my_broadcast_event', namespace='/test')
 # def test_broadcast_message(message):
 #     print(message)
@@ -45,10 +37,8 @@ def index():
 
 
 # {'data': message['data'], 'count': session['receive_count']},
-
-
-tuling='3d3fa6b66f72479eaa9c45be57b639e0'  #老师的
-#tuling='e238e5b6de7545fc886720c0d175cb79'    #自己的
+tuling='3d3fa6b66f72479eaa9c45be57b639e0'  # 老师的
+# tuling='e238e5b6de7545fc886720c0d175cb79'    #自己的
 api_url = "http://openapi.tuling123.com/openapi/api/v2"
 
 
@@ -109,7 +99,7 @@ def get_message(message):
              broadcast=True)
 
 
-#login
+# 登录监听函数
 @socketio.on('my_login_event', namespace='/test')
 def get_login_message(message):
     username, password = message["username"], message['password']
@@ -128,47 +118,41 @@ def get_login_message(message):
         else:
             emit("login_backtips_event", {'data': '密码错误！'})
             return 0#[0,False]
-#得到登陆用户的聊天记录
+
+# 得到登陆用户的聊天记录
+
+
 def get_record_message(username):
-    db = pymysql.connect(host='localhost', user='root', database='user_information', charset='utf8')
-    cursor = db.cursor()
-    sql = "SELECT * FROM record WHERE USERID='%s'" % (username)   #后期数据库表中可能会改列名，到时候换一下。
-    try:
-        cursor.execute(sql)  # 执行SQL语句
-        results = cursor.fetchall()  # 获取所有记录元组
-        # print(results)
-    except:
-        print("Error: unable to fetch data")
-    db.close()
+    results = recordMysql.record_query(username)
+    print(len(results))
     print(results[-1], results[-2], results[-3])
     print(results[-2][2],results[-3][2])
     b=[]
     c=-1
-    while(len(b)<3 and c>-5):
+    while(len(b)<3 and c>-1*len(results)):
         if(results[c][6]!='1'):
             b.append(c)
         c-=1
-    while(len(b)<3):
+    while(len(b)<3 and len(b)>0):
         b.append(b[0])
-    print(b)
-    emit("add_histiry_event", {'username': username, 'one1': results[b[2]][2], "one1_re": results[b[2]][3],
-                               'two': results[b[1]][2], "two_re": results[b[1]][3],
-                               'three': results[b[0]][2], "three_re": results[b[0]][3],
-                               "one_time": results[b[2]][4].strftime('%Y-%m-%d %H:%M:%S'),
-                               "one_re_time": results[b[2]][5].strftime('%Y-%m-%d %H:%M:%S'),
-                               "two_time": results[b[1]][4].strftime('%Y-%m-%d %H:%M:%S'),
-                               "two_re_time": results[b[1]][5].strftime('%Y-%m-%d %H:%M:%S'),
-                               "three_time": results[b[0]][4].strftime('%Y-%m-%d %H:%M:%S'),
-                               "three_re_time": results[b[0]][5].strftime('%Y-%m-%d %H:%M:%S'),
-                               "one_flag":results[b[2]][6],
-                               "two_flag":results[b[1]][6],
-                               "three_flag":results[b[0]][6]})
 
-    print(results[-1][4].strftime('%Y-%m-%d %H:%M:%S'),results[-2][4].strftime('%Y-%m-%d %H:%M:%S'),results[-3][4].strftime('%Y-%m-%d %H:%M:%S'))
-    print(results[-1][5].strftime('%Y-%m-%d %H:%M:%S'), results[-2][5].strftime('%Y-%m-%d %H:%M:%S'), results[-3][5].strftime('%Y-%m-%d %H:%M:%S'))
-    return results[-1],results[-2],results[-3]  #所有的聊天记录
+    if (len(b) > 0):
+        emit("add_histiry_event", {'username': username, 'one1': results[b[2]][2], "one1_re": results[b[2]][3],
+                                   'two': results[b[1]][2], "two_re": results[b[1]][3],
+                                   'three': results[b[0]][2], "three_re": results[b[0]][3],
+                                   "one_time": results[b[2]][4].strftime('%Y-%m-%d %H:%M:%S'),
+                                   "one_re_time": results[b[2]][5].strftime('%Y-%m-%d %H:%M:%S'),
+                                   "two_time": results[b[1]][4].strftime('%Y-%m-%d %H:%M:%S'),
+                                   "two_re_time": results[b[1]][5].strftime('%Y-%m-%d %H:%M:%S'),
+                                   "three_time": results[b[0]][4].strftime('%Y-%m-%d %H:%M:%S'),
+                                   "three_re_time": results[b[0]][5].strftime('%Y-%m-%d %H:%M:%S'),
+                                   "one_flag": results[b[2]][6],
+                                   "two_flag": results[b[1]][6],
+                                   "three_flag": results[b[0]][6]})
 
-#register
+    return 0
+
+# 注册监听函数
 @socketio.on('my_register_event', namespace='/test')
 def get_register_message(message):
     print(informationMysql.information_query(message["username"]))
@@ -198,23 +182,22 @@ def get_register_message(message):
         #     emit("register_success_event", {'data': '注册成功'})
         print('注册成功')
         emit("register_success_event", {'data': '注册成功'})
-##图片转换
+
+# 图片转换
 @socketio.on('tran_img_event', namespace='/test')
 def tran_img_event(message):
-    # print(type(message))
     img = base64.b64decode(message["data"])
     file = open('1.jpg', "wb")
     file.write(img)
     file.close()
     # img = Image.open(BytesIO(img))
     # img.thumbnail((100, 100))  # 图片压缩
-    out = com.main('1.jpg')
-    #plt.imshow(img)
+    #out = com.main('1.jpg')
+    out = zyq.main()
     time1 = datetime.datetime.now()
     time2 = datetime.datetime.now()
     str2 = ''
     out = str2.join(out)
-
     if (message['check'] != ""):
         emit('my_response',
              {'username': '匿名用户', 'time1': time1.strftime('%Y-%m-%d %H:%M:%S'),
