@@ -1,4 +1,5 @@
 (function () {
+    //动态添加聊天内容函数
     var SohoExamle = {
         Message: {
             add: function (message,username,time,type) {
@@ -37,64 +38,46 @@
             }
         }
     };
-
     setTimeout(function () {
-        // $('#disconnected').modal('show');
-        // $('#call').modal('show');
-        // $('#videoCall').modal('show');
         $('#pageTour').modal('show');
     }, 1000);
-
-
-    $(document).ready(function() {
+    //聊天对话
+    $(document).ready(function () {
         namespace = '/test';
         var socket = io(namespace);
         userId = '123';
-        $('form#broadcast').submit(function(event) {
-            if ($('#broadcast_data').val()) {
-                if((($('#broadcast_data').val()).match("2017级"))||(($('#broadcast_data').val()).match("2018级"))||(($('#broadcast_data').val()).match("2019级"))) {
-                    socket.emit('my_broadcast_table_event', {data: $('#broadcast_data').val(),userId :'123',check:$("#logout_username").text()});
-                    $('#broadcast_data').val('');
-                }
-                else{
-                    socket.emit('my_broadcast_event', {data: $('#broadcast_data').val(),userId :'123',check:$("#logout_username").text()});
-                    $('#broadcast_data').val('');
-                }
-             }
-
-            // // if ($('#broadcast_data').val()) {
-            //     socket.emit('my_broadcast_event', {data: $('#broadcast_data').val(),userId :'123',check:$("#logout_username").text()});
-            //     console.log($("#logout_username").text());
-            //     socket.emit('my_broadcast_event2', {data: $('#broadcast_data').val(),userId :'123',check:$("#logout_username").text()});
-            //     // SohoExamle.Message.add($('#broadcast_data').val(), 'outgoing-message');
-            //     $('#broadcast_data').val('');
-            //     // SohoExamle.Message.add(userId, 'outgoing-message');
-            // //     input.val('');
-            // // } else {
-            // //     input.focus();
-            // // }
+        time = get_time()
+        $('.time').text(time);
+        //提交聊天内容触发函数
+        $('form#broadcast').submit(function (event) {
+            time = get_time()
+            //触发图灵回复
+            socket.emit('my_broadcast_event', {
+                data: $('#broadcast_data').val(),
+                userId: '123',
+                check: $("#logout_username").text()
+            });
+            //HTML添加聊天内容
+            if ($("#logout_username").text() == "")
+                SohoExamle.Message.add($('#broadcast_data').val(), "匿名用户", time, 'outgoing-message');
+            else
+                SohoExamle.Message.add($('#broadcast_data').val(), $("#logout_username").text(), time, 'outgoing-message');
+            $('#broadcast_data').val('');
+            // SohoExamle.Message.add(userId, 'outgoing-message');
+            //     input.val('');
+            // } else {
+            //     input.focus();
+            // }
             return false;
         });
-
-
-
+        //获取图灵回复内容后将内容添加到HTML
         socket.on('my_response', function(msg, cb) {
-            console.log(msg);
-            $('#logout_username').val()
-
-            SohoExamle.Message.add(msg.question,msg.username,msg.time1, 'outgoing-message');//问题
-            // if (msg.count%2==1){
             SohoExamle.Message.add(msg.data,msg.username,msg.time2, '');//回答
-            // SohoExamle.Message.add(userId, '');
             if (cb)
                 cb();
         });
 
-        //login in --submit
-
     });
-
-
 // outgoing-message'
     // $(document).on('submit', '.layout .content .chat .chat-footer form', function (e) {
     //     e.preventDefault();
@@ -109,13 +92,11 @@
     //         input.focus();
     //     }
     // });
-
     $(document).on('click', '.layout .content .sidebar-group .sidebar .list-group-item', function () {
         if (jQuery.browser.mobile) {
             $(this).closest('.sidebar-group').removeClass('mobile-open');
         }
     });
-
     $(document).on('click', '.layout .content .sidebar-group .sidebar .list-group-item', function () {
         if (jQuery.browser.mobile) {
             $(this).closest('.sidebar-group').removeClass('mobile-open');
@@ -123,17 +104,16 @@
     });
 })();
 
-
 namespace = '/test';
 var socket = io(namespace);
 
-//login_in
+//登录按钮触发函数（向python提交数据）
 $(".my_btn_login").click(function () {
         socket.emit('my_login_event', {username: $('#login_name').val(),password :$('#login_pass').val()});
 
 });
 
-//login_backtips_event
+//登录成功状态函数
 socket.on('login_success_event', function(msg, cb) {
     $("#login_backtip").text(msg.data);
     setTimeout(function () {
@@ -148,47 +128,44 @@ socket.on('login_success_event', function(msg, cb) {
     cb();
 });
 
+//登录失败提醒
 socket.on('login_backtips_event', function(msg, cb) {
-    console.log(msg.data);
-    console.log("shibai");
     $("#login_backtip").text(msg.data);
     if (cb)
     cb();
 });
 
-//register_in
+//注册按钮触发函数（向python提交数据）
 $('#my_btn_register').click(function () {
     socket.emit('my_register_event', {username: $('#register_name').val(),studentid: $('#register_id').val(),
             email: $('#register_email').val(),password :$('#register_pass').val(),lastpass: $('#last_pass').val()});
 });
-//register_tips_event
+
+//注册成功触发函数
 socket.on('register_success_event', function(msg, cb) {
     $("#register_tip").text(msg.data);
     setTimeout(function () {
         $(register).css("display","none");
     }, 1000);
-    // var name = $('#register_name').val();
-    // $("#cross4_out").text(name.slice(0,1));
-    // $("#cross4_out").css("display","block");
-    // $("#cross3").css("display","none");
-    // $("#logout_username").text(name);
     if (cb)
     cb();
 });
 
+//注册失败触发函数
 socket.on('register_tips_event', function(msg, cb) {
     $("#register_tip").text(msg.data);
     if (cb)
     cb();
 });
 
-//logout
+//退出登录触发函数
 $("#my_btn_out").click(function () {
         $(logout).css("display","none");
         $("#login_backtip").text("");
         $("#cross3").css("display","block");
         $("#cross4_out").text("");
         $("#cross4_out").css("display","none");
+        time=get_time()
         $('.layout .content .chat .chat-body .messages').html(
                     `<div class="message-item ">
                         <div class="message-avatar">
@@ -197,19 +174,19 @@ $("#my_btn_out").click(function () {
                             </figure>
                             <div>
                                 <h5>小软棉</h5>
-                                <div class="time"></div>
+                                <div class="time">`+time+ `</div>
                             </div>
                         </div>
                         <div class="message-content">
                                 欢迎来到你的私人小空间！小软棉已经等候您好久啦，快来和我聊天吧~ 😃
-                        </div>
-                        
+                        </div>                       
                     </div>`);
 });
+
+//退出登录时点击空白处弹框消失
 var cross4_out=document.getElementById("cross4_out");
 var logout=document.getElementsByClassName("logout")[0];
 cross4_out.onclick=function(){
-    console.log($(logout).css("display"))
     $(logout).css("z-index",0);
     $(logout).css("display","block");
 }
@@ -222,7 +199,7 @@ $('.logout .form-membership2').click(function(event){
          event.stopPropagation();
   });
 
-//login
+//登录时点击空白处弹框消失
 var cross3=document.getElementById("cross3");
 var huikuang=document.getElementsByClassName("huikuang")[0];
 cross3.onclick=function(){
@@ -238,8 +215,7 @@ $('.huikuang .form-membership2').click(function(event){
          event.stopPropagation();
   });
 
-
-//register
+//注册时点击空白处弹框消失
 var toregister=document.getElementById("toregister");
 console.log(toregister)
 var register=document.getElementsByClassName("register")[0];
@@ -247,7 +223,6 @@ toregister.onclick=function(){
     $(register).css("z-index",0);
     $(register).css("display","block");
 }
-
 $('.register').on('click',function(event){
     //取消事件冒泡
     event.stopPropagation();
@@ -256,6 +231,7 @@ $('.register').on('click',function(event){
 $('.register .form-membership0').click(function(event){
          event.stopPropagation();
   });
+
 //register-backto-sign
 var backsign=document.getElementById("backsign");
 var huikuang=document.getElementsByClassName("huikuang")[0];
@@ -273,9 +249,7 @@ $('.huikuang .form-membership2').click(function(event){
          event.stopPropagation();
   });
 
-
-/*********简介框******开始*****/
-//手机版点击简介弹出介绍框
+//手机版点击出现简介框
 var ins = document.getElementsByClassName("ins")[0];
 var intr  = document.getElementsByClassName("introduction")[0];
 var chat=document.getElementsByClassName("chat-body")[0];
@@ -399,8 +373,6 @@ var SohoExamle1 = {
 
 //登录后向聊天界面添加信息
 socket.on('add_histiry_event', function(msg, cb) {
-        console.log(msg.two_re)
-        console.log(msg.username);
         SohoExamle1.Message.add(msg.username,msg.one_time,msg.one1, 'outgoing-message');
         SohoExamle1.Message.add(msg.username,msg.one_re_time,msg.one1_re, '');
         SohoExamle1.Message.add(msg.username,msg.two_time,msg.two, 'outgoing-message');

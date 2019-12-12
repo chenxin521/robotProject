@@ -38,27 +38,49 @@ var SohoExamle = {
         }
     };
 
-
-
+//显示图片
 function showImg(input) {
     var file = input.files[0];
     console.log(file)
     console.log(input)
     var reader = new FileReader()
-    console.log(reader)
-    // 图片读取成功回调函数
+    time = get_time()
     reader.onload = function (e) {
         // document.getElementById('upload').src = e.target.result
-        SohoExamle.Message.add(e.target.result, '传图片','2019-12-10 16:05:03 ','outgoing-message');
+        if($("#logout_username").text()=="")
+            SohoExamle.Message.add(e.target.result, '匿名用户',time,'outgoing-message');
+        else
+            SohoExamle.Message.add(e.target.result, $("#logout_username").text(),time,'outgoing-message');
         a = e.target.result.substring( e.target.result.indexOf(",")+1);
-        socket.emit('tran_img_event', {data: a});
+        socket.emit('tran_img_event', {data: a,userId :'123',check:$("#logout_username").text()});
     }
 
     reader.readAsDataURL(file)
 }
 
+//以后可能会用到的一个函数
 // function showImg(input) {
 //     var file = input.files[0];
 //     var url = window.URL.createObjectURL(file)
 //     document.getElemtById('upload').src = url
 // }
+
+//获取当前时间函数
+function get_time() {
+    var now = new Date();
+    var year = now.getFullYear(); //得到年份
+    var month = now.getMonth();//得到月份
+    var date = now.getDate();//得到日期
+    var hour = now.getHours();//得到小时
+    var minu = now.getMinutes();//得到分钟
+    var sec = now.getSeconds();//得到秒
+    month = month + 1;
+    if (month < 10) month = "0" + month;
+    if (date < 10) date = "0" + date;
+    if (hour < 10) hour = "0" + hour;
+    if (minu < 10) minu = "0" + minu;
+    if (sec < 10) sec = "0" + sec;
+    var time = "";
+    time = year + "-" + month + "-" + date + "" + " " + hour + ":" + minu + ":" + sec;
+    return time;
+}
