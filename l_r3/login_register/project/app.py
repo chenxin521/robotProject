@@ -135,14 +135,14 @@ def get_message(message):
     if(message['check']!=""):
         emit('my_response',
              {'question': message['data'], 'username': message['check'], 'time1': time1.strftime('%Y-%m-%d %H:%M:%S'),
-              'time2': time2.strftime('%Y-%m-%d %H:%M:%S'), 'data': results_text, 'count': session['receive_count']},
-             broadcast=True)
+              'time2': time2.strftime('%Y-%m-%d %H:%M:%S'), 'data': results_text, 'count': session['receive_count']}
+             )
         recordMysql.record_create1(message['check'], message['data'], results_text, time1, time2,0)
     else:
         emit('my_response',
              {'question': message['data'], 'username': '匿名用户', 'time1': time1.strftime('%Y-%m-%d %H:%M:%S'),
-              'time2': time2.strftime('%Y-%m-%d %H:%M:%S'), 'data': results_text, 'count': session['receive_count']},
-             broadcast=True)
+              'time2': time2.strftime('%Y-%m-%d %H:%M:%S'), 'data': results_text, 'count': session['receive_count']}
+             )
 
 
 # 登录监听函数
