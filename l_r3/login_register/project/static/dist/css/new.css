@@ -3,7 +3,9 @@ input{outline:none;}
 ul,li,ol{
     list-style: none;
 }
-
+.message-item_haha{
+    width: 50px;
+}
 .left_img{
     height:100%;
     width: 100%;

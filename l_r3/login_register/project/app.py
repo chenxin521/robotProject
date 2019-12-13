@@ -87,6 +87,32 @@ def get_message(message):
     response_str = response.read().decode('utf8')
     response_dic = json.loads(response_str)
 
+    results_text = response_dic['results'][0]['values']['text']
+
+    # print("怎么做："+results_text)
+    session['receive_count'] = session.get('receive_count', 0) + 1
+    time2 = datetime.datetime.now()
+
+
+    # judge=get_login_message(message)
+    # if judge>0:
+    if(message['check']!=""):
+        emit('my_response',
+             {'question': message['data'], 'username': message['check'], 'time1': time1.strftime('%Y-%m-%d %H:%M:%S'),
+              'time2': time2.strftime('%Y-%m-%d %H:%M:%S'), 'data': results_text, 'count': session['receive_count']},
+             broadcast=True)
+        recordMysql.record_create(message['check'], message['data'], results_text, time1, time2)
+    else:
+        emit('my_response',
+             {'question': message['data'], 'username': '匿名用户', 'time1': time1.strftime('%Y-%m-%d %H:%M:%S'),
+              'time2': time2.strftime('%Y-%m-%d %H:%M:%S'), 'data': results_text, 'count': session['receive_count']},
+             broadcast=True)
+
+@socketio.on('my_broadcast_table_event', namespace='/test')
+def get_table_message(message):
+    time1=datetime.datetime.now()
+    print(message)
+
     #计算现在是第几周的代码
     today = datetime.date.today()
     date1 = time.strptime('2019-09-02', "%Y-%m-%d")
@@ -112,8 +138,8 @@ def get_message(message):
             results_text = scheduleMysql.class_schedule_query1(grade[0], class1[0], str(this_week), day[0],direction[0])
             # print('我是调用的第二个函数')
     #询问某道菜怎么做时，直接返回url
-    elif "怎么做" in message['data']:
-        results_text = response_dic['results'][0]['values']['url']
+    # elif "怎么做" in message['data']:
+    #     results_text = response_dic['results'][0]['values']['url']
     # #这是2018和2019级查询
     elif re.search('\d\d\d\d级',message['data']) and re.search('[1-8]班',message['data']) and re.search('星期\D{1}',message['data']):
         grade = re.findall('\d\d\d\d级', message['data'])
@@ -123,13 +149,15 @@ def get_message(message):
         #print(type(scheduleMysql.class_schedule_query(grade[0],class1[0],week[0],day[0])))
         results_text=scheduleMysql.class_schedule_query(grade[0],class1[0],str(this_week),day[0])
         # print('我是第一个函数')
-    else:
-        results_text = response_dic['results'][0]['values']['text']
 
+    print(results_text)
+    for i in range(len(results_text)):
+        results_text[i] = "*************** " + str(i) + "： " + str(results_text[i])[1:-1]
+
+    # results_text = str(results_text)[1:-1]
     # print("怎么做："+results_text)
     session['receive_count'] = session.get('receive_count', 0) + 1
     time2 = datetime.datetime.now()
-
 
 
     # judge=get_login_message(message)

@@ -11,7 +11,7 @@
                     message = message ? message : '收到（假的）';
 
                     $('.layout .content .chat .chat-body .messages').append(
-                    `<div class="message-item ` + type + `">
+                    `<div class="message-item_haha ` + type + `">
                         <div class="message-avatar">
                             <figure class="avatar">
                                 <img src="/static/dist/media/img/` + (type == 'outgoing-message' ? 'women_avatar5.jpg' : 'man_avatar3.jpg') + `" class="rounded-circle">
