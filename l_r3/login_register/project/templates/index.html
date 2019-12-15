@@ -53,25 +53,25 @@
             </div>
         </li>
         <li class="square4">
-            <div class="square-box1">推送课表，请选择</div>
+            <div class="square-box1" id="phonesubmition">推送课表，请选择</div>
             <div class="square-box2">
                 <div class="inside-square6" style="width: 70px;">
-                    <select class="grade">
-                        <option values="1">大一</option>
-                        <option values="2">大二</option>
-                        <option values="3">大三</option>
+                    <select class="grade" id="phonegrade">
+                        <option values="1">2019级</option>
+                        <option values="2">2018级</option>
+                        <option values="3">2017级</option>
                     </select>
                 </div>
-                <div class="inside-square6" style="width: 40px;">
-                    <select class="class1" style="dispaly:block">
-                        <option>1</option>
-                        <option>2</option>
-                        <option>3</option>
-                        <option>4</option>
-                        <option>5</option>
-                        <option>6</option>
-                        <option>7</option>
-                        <option>8</option>
+                <div class="inside-square6 class1" style="width: 40px;margin-left: 10px;">
+                    <select style="dispaly:block" id="phoneclass">
+                        <option>1班</option>
+                        <option>2班</option>
+                        <option>3班</option>
+                        <option>4班</option>
+                        <option>5班</option>
+                        <option>6班</option>
+                        <option>7班</option>
+                        <option>8班</option>
                     </select>
                 </div>
                 <div class="inside-square6" style="width: 100px;">
@@ -80,6 +80,15 @@
                         <option>JAVA与安卓方向</option>
                         <option>人工智能方向</option>
                         <option>软件测试方向</option>
+                    </select>
+                </div>
+                <div class="inside-square6 class1" style="width: 40px;margin-left: 10px;">
+                    <select style="dispaly:block" id="phoneday">
+                        <option>星期一</option>
+                        <option>星期二</option>
+                        <option>星期三</option>
+                        <option>星期四</option>
+                        <option>星期五</option>
                     </select>
                 </div>
             </div>
@@ -617,7 +626,7 @@
             <div class="left_img">
                 <li class="square">
                     <div class="inside-square1">
-                        <p style="font-family: 幼圆;font-size:20px;font-weight: bold;">
+                        <p style="font-family: 幼圆;font-size:20px;font-weight: bold;" id="funlist">
                             <img src="../static/dist/media/img/robot6.png" style="padding-right:20px;padding-left: 15px">
                             简介说明
                         </p>
@@ -640,33 +649,42 @@
                     </div>
                 </li>
                 <li class="square4" >
-                    <div class="square-box1">推送课表，请选择</div>
+                    <div class="square-box1" id="submition">推送课表，请选择</div>
                     <div class="square-box2">
                         <div class="inside-square6" style="width: 70px;">
-                            <select class="grade2">
-                                <option values="1">大一</option>
-                                <option values="2">大二</option>
-                                <option values="3">大三</option>
+                            <select class="grade2"  id="selectgrade">
+                                <option values="1">2019级</option>
+                                <option values="2">2018级</option>
+                                <option values="3">2017级</option>
                             </select>
                         </div>
-                        <div class="inside-square6" style="dispaly:block;width:40px;">
-                            <select class="class2">
-                                <option>1</option>
-                                <option>2</option>
-                                <option>3</option>
-                                <option>4</option>
-                                <option>5</option>
-                                <option>6</option>
-                                <option>7</option>
-                                <option>8</option>
+                        <div class="inside-square6 class2" style="dispaly:block;width:40px;margin-left: 10px;">
+                            <select  id="selectclass">
+                                <option>1班</option>
+                                <option>2班</option>
+                                <option>3班</option>
+                                <option>4班</option>
+                                <option>5班</option>
+                                <option>6班</option>
+                                <option>7班</option>
+                                <option>8班</option>
                             </select>
                         </div>
-                        <div class="inside-square6" style="width: 100px;">
-                            <select class="point2" style="width: 100px;display:block;">
+                        <div class="inside-square6 point2" style="width: 100px;display: none;margin-left: 10px;">
+                            <select style="width: 100px;display:block;"  id="selectdirection">
                                 <option>HTML5方向</option>
                                 <option>JAVA与安卓方向</option>
                                 <option>人工智能方向</option>
                                 <option>软件测试方向</option>
+                            </select>
+                        </div>
+                        <div class="inside-square6 class2" style="dispaly:block;width:40px;margin-left: 10px;">
+                            <select  id="selectday">
+                                <option>星期一</option>
+                                <option>星期二</option>
+                                <option>星期三</option>
+                                <option>星期四</option>
+                                <option>星期五</option>
                             </select>
                         </div>
                     </div>
@@ -1240,6 +1258,32 @@
             </form>
             <!-- ./ form -->
         </div>
+    </div>
+</div>
+
+<div class="functionlist">
+    <div class="funlist1">
+        <ul style="margin-top: 50px;">
+            <li><img src="../static/dist/media/img/聊天对话.png"></li>
+            <li><img src="../static/dist/media/img/图片识别.png"></li>
+            <li><img src="../static/dist/media/img/课表查询.png"></li>
+            <li><img src="../static/dist/media/img/快递查询.png"></li>
+            <li><img src="../static/dist/media/img/天气查询.png"></li>
+        </ul>
+        <ul>
+            <li><img src="../static/dist/media/img/中英互译.png"></li>
+            <li><img src="../static/dist/media/img/菜谱大全.png"></li>
+            <li><img src="../static/dist/media/img/数字计算.png"></li>
+            <li><img src="../static/dist/media/img/星座运势.png"></li>
+            <li><img src="../static/dist/media/img/故事大全.png"></li>
+        </ul>
+        <ul>
+            <li><img src="../static/dist/media/img/脑筋急转弯.png"></li>
+            <li><img src="../static/dist/media/img/绕口令.png"></li>
+            <li><img src="../static/dist/media/img/笑话大全.png"></li>
+            <li><img src="../static/dist/media/img/歇后语.png"></li>
+            <li><img src="../static/dist/media/img/成语接龙.png"></li>
+        </ul>
     </div>
 </div>
 <!-- Bundle -->

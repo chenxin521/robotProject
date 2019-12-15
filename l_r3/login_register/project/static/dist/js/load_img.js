@@ -23,7 +23,7 @@ var SohoExamle = {
                         <div class="message-content1">
                         <img id="img_size" src="`+message+`">
                            </div>
-                        
+
                     </div>`);
 
                     setTimeout(function () {
@@ -41,18 +41,58 @@ var SohoExamle = {
 //显示图片
 function showImg(input) {
     var file = input.files[0];
-    console.log(file)
-    console.log(input)
-    var reader = new FileReader()
-    time = get_time()
+    var reader = new FileReader();
+    time = get_time();
     reader.onload = function (e) {
-        // document.getElementById('upload').src = e.target.result
+
         if($("#logout_username").text()=="")
             SohoExamle.Message.add(e.target.result, '匿名用户',time,'outgoing-message');
         else
             SohoExamle.Message.add(e.target.result, $("#logout_username").text(),time,'outgoing-message');
-        a = e.target.result.substring( e.target.result.indexOf(",")+1);
-        socket.emit('tran_img_event', {data: a,userId :'123',check:$("#logout_username").text()});
+        time2 = get_time();
+        var special_ana = ["1.验证码识别 2.汉字识别(只能输入1或者2哦！)"];
+        SohoExamle1.Message.add('小软棉',time2,special_ana[0], '');
+
+        // $('form#broadcast').submit(function (event) {
+        //     // time = get_time();
+        //
+        //     //HTML添加聊天内容
+        //     if ($("#logout_username").text() == "")
+        //         SohoExamle1.Message.add("匿名用户",time,$('#broadcast_data').val(),'outgoing-message');
+        //     else
+        //         SohoExamle1.Message.add($("#logout_username").text(),time,$('#broadcast_data').val(),'outgoing-message');
+        //     $('#broadcast_data').val('');
+        //     //获取人和机器人说的最后一句话
+        //     var last_robot = "";
+        //     var last_people = "";
+        //     if($(".message-item:last").children('.message-content').length>0)
+        //         last_robot=$(".message-item:last").children('.message-content').text();
+        //     if($(".message-item, .outgoing-message").eq(-1).length>0) {
+        //         last_people=$(".message-item, .outgoing-message").eq(-1).children('.message-content').text();
+        //     }
+        //     console.log(last_people);
+        //     console.log(last_robot);
+        //     //最后一句话肯定是人说的
+        //     if(last_robot==last_people)
+        //         last_robot=$(".message-item").eq(-2).children('.message-content').text();
+        //     else if(last_people.replace(" ","")=="1" && special_ana.indexOf(last_robot) != -1)
+        //         socket.emit('tran_img_event', {data: a, userId: '123', check: $("#logout_username").text()});
+        //     else if(last_people.replace(" ","")=="2" && special_ana.indexOf(last_robot) != -1)
+        //         socket.emit('hand_write_event', {data: a, userId: '123', check: $("#logout_username").text()});
+        //     else
+        //         SohoExamle1.Message.add('小软棉',time2,special_ana[0], '');
+        //     // SohoExamle.Message.add(userId, 'outgoing-message');
+        //     //     input.val('');
+        //     // } else {
+        //     //     input.focus();
+        //     // }
+        //     return false;
+        // });
+
+
+
+        // a = e.target.result.substring( e.target.result.indexOf(",")+1);
+        // socket.emit('tran_img_event', {data: a,userId :'123',check:$("#logout_username").text()});
     }
 
     reader.readAsDataURL(file)
@@ -84,3 +124,42 @@ function get_time() {
     time = year + "-" + month + "-" + date + "" + " " + hour + ":" + minu + ":" + sec;
     return time;
 }
+
+var SohoExamle1 = {
+        Message: {
+            add: function (username,time,message, type) {
+                var chat_body = $('.layout .content .chat .chat-body');
+
+                if (chat_body.length > 0) {
+                    console.log(message);
+
+                    type = type ? type : '';
+                    message = message ? message : '收到（假的）';
+
+                    $('.layout .content .chat .chat-body .messages').append(
+                    `<div class="message-item ` + type + `">
+                        <div class="message-avatar">
+                            <figure class="avatar">
+                                <img src="/static/dist/media/img/` + (type == 'outgoing-message' ? 'women_avatar5.jpg' : 'man_avatar3.jpg') + `" class="rounded-circle">
+                            </figure>
+                            <div>
+                                <h5>` + (type == 'outgoing-message' ? username : '小软棉') + `</h5>
+                                <div class="time">`+time+ ``+ (type == 'outgoing-message' ? '<i class="ti-check"></i>' : '') + `</div>
+                            </div>
+                        </div>
+                        <div class="message-content">
+                            ` + message + `
+                        </div>
+                    </div>`);
+
+                    setTimeout(function () {
+                        chat_body.scrollTop(chat_body.get(0).scrollHeight, -1).niceScroll({
+                            cursorcolor: 'rgba(66, 66, 66, 0.20)',
+                            cursorwidth: "4px",
+                            cursorborder: '0px'
+                        }).resize();
+                    }, 200);
+                }
+            }
+        }
+    };

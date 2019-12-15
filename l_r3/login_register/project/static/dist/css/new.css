@@ -185,6 +185,39 @@ select{
 	display: none;
 	z-index: -1;
 }
+.functionlist{
+	width: 100%;
+	height:100%;
+	background-color: #dedcd8;
+	background: rgba(0,0,0,0.3);
+	position: fixed;
+	top:0px;
+	display: none;
+	z-index: -1;
+}
+.funlist1{
+	width:50%;
+	height: 80%;
+	text-align: center;
+	border: 1px solid #e6e6e6;
+	background-color: #fff;
+	margin-top: 30px;
+	/*padding: 10rem;*/
+	border-radius: 5px;
+    margin: 60px auto;
+    text-align: center;
+}
+.funlist1 ul{
+	width: 100%;
+	height: 33%;
+	margin:0 10px 10px 10px;
+	float:left;
+}
+.funlist1 ul li{
+	width: 18%;
+	height: 80%;
+	float:left;
+}
 .register{
 	width: 100%;
 	height:100%;

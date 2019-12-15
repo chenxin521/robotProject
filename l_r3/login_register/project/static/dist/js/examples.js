@@ -6,8 +6,6 @@
                 var chat_body = $('.layout .content .chat .chat-body');
 
                 if (chat_body.length > 0) {
-                    console.log(message);
-
                     type = type ? type : '';
                     message = message ? message : '收到（假的）';
 
@@ -41,40 +39,86 @@
     setTimeout(function () {
         $('#pageTour').modal('show');
     }, 1000);
+    var special_que = ["1"];
+    var special_ana = ["2"];
     //聊天对话
     $(document).ready(function () {
         namespace = '/test';
         var socket = io(namespace);
         userId = '123';
-        time = get_time()
+        time = get_time();
         $('.time').text(time);
         //提交聊天内容触发函数
         $('form#broadcast').submit(function (event) {
-            time = get_time()
-            //触发图灵回复
-            socket.emit('my_broadcast_event', {
-                data: $('#broadcast_data').val(),
-                userId: '123',
-                check: $("#logout_username").text()
-            });
+            time = get_time();
+            if ($('#broadcast_data').val()) {
+                //触发查课表函数
+                if((($('#broadcast_data').val()).match("2017级"))||(($('#broadcast_data').val()).match("2018级"))||(($('#broadcast_data').val()).match("2019级"))) {
+                        socket.emit('my_broadcast_table_event', {data: $('#broadcast_data').val(),userId :'123',check:$("#logout_username").text()});
+                        return false;
+                }
+                //触发图灵回复
+
+            }
             //HTML添加聊天内容
             if ($("#logout_username").text() == "")
                 SohoExamle.Message.add($('#broadcast_data').val(), "匿名用户", time, 'outgoing-message');
             else
                 SohoExamle.Message.add($('#broadcast_data').val(), $("#logout_username").text(), time, 'outgoing-message');
+
             $('#broadcast_data').val('');
-            // SohoExamle.Message.add(userId, 'outgoing-message');
-            //     input.val('');
-            // } else {
-            //     input.focus();
-            // }
+            var special_ana = ["1.验证码识别 2.汉字识别(只能输入1或者2哦！)"];
+            var special_que = ["1","2"]
+            //获取人和机器人说的最后一句话
+            var last_robot = "";
+            var last_people = "";
+            var re=/[^\u4e00-\u9fa5a-zA-Z0-9]/g;
+            if($(".message-item:last").children('.message-content').length>0)
+                last_robot=$(".message-item:last").children('.message-content').text();
+            if($(".outgoing-message").eq(-1).length>0) {
+                console.log("haha");
+                last_people=$(".outgoing-message").eq(-1).children('.message-content').text();
+                console.log(last_people)
+            }
+            //最后一个是人说的
+            if(last_robot==last_people)
+                last_robot=$(".message-item").eq(-2).children('.message-content').text();
+            //不是特殊问题才会触发图灵机器人
+            // console.log(special_que.indexOf(last_people.replace(re,"")) == -1);
+            // console.log(special_ana.indexOf(last_robot) == -1);
+            last_people = iGetInnerText(last_people);
+            console.log(last_people);
+            if(special_ana.indexOf(last_robot) == -1 && special_que.indexOf(last_people) == -1) {
+                socket.emit('my_broadcast_event', {
+                    data: last_people,
+                    userId: '123',
+                    check: $("#logout_username").text()
+                });
+                return false;
+            }
+            time2= get_time();
+            cpoy_src=$(".outgoing-message").eq(-2).children(".message-content1").children("#img_size").attr("src");
+            cpoy_src = cpoy_src.substring( cpoy_src.indexOf(",")+1);
+
+            if(last_people.replace(re,"")=="1") {
+                 socket.emit('tran_img_event', {data: cpoy_src, userId: '123', check: $("#logout_username").text()});
+             }
+             else if(last_people.replace(re,"")=="2")
+                 socket.emit('hand_write_event', {data: cpoy_src, userId: '123', check: $("#logout_username").text()});
+             else
+                 SohoExamle.Message.add(special_ana[0],'小软棉',time2, '');
+            // // SohoExamle.Message.add(userId, 'outgoing-message');
+            // //     input.val('');
+            // // } else {
+            // //     input.focus();
+            // // }
             return false;
         });
         //获取图灵回复内容后将内容添加到HTML
-        socket.on('my_response', function(msg, cb) {
+        socket.on('my_response', function(msg) {
             SohoExamle.Message.add(msg.data,msg.username,msg.time2, '');//回答
-            if (cb)
-                cb();
+            // if (cb)
+            //     cb();
         });
 
     });
@@ -302,7 +346,7 @@ var point=document.getElementsByClassName("point")[0];
 grade.onchange=function(){
     var text=grade.options[grade.selectedIndex].text;
 
-    if(text=="大三"){
+    if(text=="2017级"){
         point.style.display="block";
         ban1.style.display="none";
     }
@@ -317,8 +361,9 @@ var grade2=document.getElementsByClassName("grade2")[0];
 var point2=document.getElementsByClassName("point2")[0];
 grade2.onchange=function(){
     var text=grade2.options[grade2.selectedIndex].text;
-    console.log(text)
-    if(text=="大三"){
+    // console.log(text)
+
+    if(text=="2017级"){
         point2.style.display="block";
         ban2.style.display="none";
     }
@@ -327,9 +372,19 @@ grade2.onchange=function(){
         point2.style.display="none";
     }
 }
+var functionlist=document.getElementsByClassName("functionlist")[0];
+var funlist=document.getElementById("funlist");
 
+$(funlist).click(function () {
+    $(functionlist).css("z-index",0);
+    $(functionlist).css("display","block");
+});
 
-
+$('.functionlist').on('click',function(event){
+    //取消事件冒泡
+    event.stopPropagation();
+    $(functionlist).css("display","none");
+});
 /*********简介框******结束*****/
 
 /*********登录后向聊天界面添加历史信息******开始*****/
@@ -383,5 +438,103 @@ socket.on('add_histiry_event', function(msg, cb) {
     if (cb)
     cb();
 });
+socket.on('add_histiry_event1', function(msg, cb) {
+        SohoExamle1.Message.add(msg.username,msg.one_time,msg.one1, 'outgoing-message');
+        SohoExamle1.Message.add(msg.username,msg.one_re_time,msg.one1_re, '');
+        SohoExamle1.Message.add(msg.username,msg.two_time,msg.two, 'outgoing-message');
+        SohoExamle1.Message.add(msg.username,msg.two_re_time,msg.two_re, '');
+    if (cb)
+    cb();
+});
+socket.on('add_histiry_event2', function(msg, cb) {
+        SohoExamle1.Message.add(msg.username,msg.one_time,msg.one1, 'outgoing-message');
+        SohoExamle1.Message.add(msg.username,msg.one_re_time,msg.one1_re, '');
+    if (cb)
+    cb();
+});
 /*********登录后向聊天界面添加历史信息******结束*****/
 
+
+/*********    用户登录后查询课表        ******开始*****/
+/*********PC端用户登录后查询课表******开始*****/
+$('#submition').click(function () {
+    var grades = document.getElementById("selectgrade");
+    var classes = document.getElementById("selectclass");
+    var dirctions = document.getElementById("selectdirection");
+    var weekdays = document.getElementById("selectday");
+    var text1 = grades.options[grades.selectedIndex].text;
+    var text2 = classes.options[classes.selectedIndex].text;
+    var text3 = dirctions.options[dirctions.selectedIndex].text;
+    var text4 = weekdays.options[weekdays.selectedIndex].text;
+
+    socket.emit('get_push_message', {text1: text1,text2: text2,text3: text3,text4:text4,check:$("#logout_username").text()});
+});
+/*********PC端用户登录后查询课表******结束*****/
+
+/*********手机端用户登录后查询课表******开始*****/
+var leftphone = document.getElementById("leftphone");
+
+$('#phonesubmition').click(function () {
+    var grades = document.getElementById("phonegrade");
+    var classes = document.getElementById("phoneclass");
+    var dirctions = document.getElementById("phonedirection");
+    var weekdays = document.getElementById("phoneday");
+    var text1 = grades.options[grades.selectedIndex].text;
+    var text2 = classes.options[classes.selectedIndex].text;
+    var text3 = dirctions.options[dirctions.selectedIndex].text;
+    var text4 = weekdays.options[weekdays.selectedIndex].text;
+
+    $(leftphone).css("display","none");
+
+    socket.emit('get_push_message', {text1: text1,text2: text2,text3: text3,text4:text4,check:$("#logout_username").text()});
+});
+/*********手机端用户登录后查询课表******结束*****/
+var SohoExamle2 = {
+        Message: {
+            add: function (message, type) {
+                var chat_body = $('.layout .content .chat .chat-body');
+
+                if (chat_body.length > 0) {
+
+                    type = type ? type : '';
+                    message = message ? message : '收到（假的）';
+
+                    $('.layout .content .chat .chat-body .messages').append(
+                    `<div class="message-item ` + type + `">
+                        <div class="message-avatar">
+                            <figure class="avatar">
+                                <img src="/static/dist/media/img/` + (type == 'outgoing-message' ? 'women_avatar5.jpg' : 'man_avatar3.jpg') + `" class="rounded-circle">
+                            </figure>
+                            <div>
+                                <h5>` + (type == 'outgoing-message' ? username : '小软棉') + `</h5>
+                                <div class="time">`+time+ ``+ (type == 'outgoing-message' ? '<i class="ti-check"></i>' : '') + `</div>
+                            </div>
+                        </div>
+                        <div class="message-content">
+                            ` + message + `
+                        </div>
+                    </div>`);
+
+                    setTimeout(function () {
+                        chat_body.scrollTop(chat_body.get(0).scrollHeight, -1).niceScroll({
+                            cursorcolor: 'rgba(66, 66, 66, 0.20)',
+                            cursorwidth: "4px",
+                            cursorborder: '0px'
+                        }).resize();
+                    }, 200);
+                }
+            }
+        }
+};
+socket.on('push_table_event', function(msg, cb) {
+    SohoExamle2.Message.add(msg.data,'');//回答
+    if (cb)
+        cb();
+});
+/*********    用户登录后查询课表        ******结束*****/
+function iGetInnerText(testStr) {
+        var resultStr = testStr.replace(/\ +/g, ""); //去掉空格
+        resultStr = resultStr.replace(/[ ]/g, "");    //去掉空格
+        resultStr = resultStr.replace(/[\r\n]/g, ""); //去掉回车换行
+        return resultStr;
+    }
