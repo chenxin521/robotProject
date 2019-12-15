@@ -170,29 +170,30 @@ def get_login_message(message):
 
 def get_record_message(username):
     results = recordMysql.record_query(username)
+    if(len(results)==0):
+        return 0
+    find_index=[]
+    upward=-1
+    while(len(find_index)<3 and upward>-1*len(results)):
+        if(results[upward][6]!='1'):
+            find_index.append(upward)
+        upward-=1
+    while(len(find_index)<3 and len(find_index)>0):
+        find_index.append(find_index[0])
 
-    b=[]
-    c=-1
-    while(len(b)<3 and c>-1*len(results)):
-        if(results[c][6]!='1'):
-            b.append(c)
-        c-=1
-    while(len(b)<3 and len(b)>0):
-        b.append(b[0])
-
-    if (len(b) > 0):
-        emit("add_histiry_event", {'username': username, 'one1': results[b[2]][2], "one1_re": results[b[2]][3],
-                                   'two': results[b[1]][2], "two_re": results[b[1]][3],
-                                   'three': results[b[0]][2], "three_re": results[b[0]][3],
-                                   "one_time": results[b[2]][4].strftime('%Y-%m-%d %H:%M:%S'),
-                                   "one_re_time": results[b[2]][5].strftime('%Y-%m-%d %H:%M:%S'),
-                                   "two_time": results[b[1]][4].strftime('%Y-%m-%d %H:%M:%S'),
-                                   "two_re_time": results[b[1]][5].strftime('%Y-%m-%d %H:%M:%S'),
-                                   "three_time": results[b[0]][4].strftime('%Y-%m-%d %H:%M:%S'),
-                                   "three_re_time": results[b[0]][5].strftime('%Y-%m-%d %H:%M:%S'),
-                                   "one_flag": results[b[2]][6],
-                                   "two_flag": results[b[1]][6],
-                                   "three_flag": results[b[0]][6]})
+    if (len(find_index) > 0):
+        emit("add_histiry_event", {'username': username, 'one1': results[find_index[2]][2], "one1_re": results[find_index[2]][3],
+                                   'two': results[find_index[1]][2], "two_re": results[find_index[1]][3],
+                                   'three': results[find_index[0]][2], "three_re": results[find_index[0]][3],
+                                   "one_time": results[find_index[2]][4].strftime('%Y-%m-%d %H:%M:%S'),
+                                   "one_re_time": results[find_index[2]][5].strftime('%Y-%m-%d %H:%M:%S'),
+                                   "two_time": results[find_index[1]][4].strftime('%Y-%m-%d %H:%M:%S'),
+                                   "two_re_time": results[find_index[1]][5].strftime('%Y-%m-%d %H:%M:%S'),
+                                   "three_time": results[find_index[0]][4].strftime('%Y-%m-%d %H:%M:%S'),
+                                   "three_re_time": results[find_index[0]][5].strftime('%Y-%m-%d %H:%M:%S'),
+                                   "one_flag": results[find_index[2]][6],
+                                   "two_flag": results[find_index[1]][6],
+                                   "three_flag": results[find_index[0]][6]})
 
     return 0
 
