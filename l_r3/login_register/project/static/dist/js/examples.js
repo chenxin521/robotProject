@@ -7,7 +7,7 @@
 
                 if (chat_body.length > 0) {
                     type = type ? type : '';
-                    message = message ? message : '收到（假的）';
+                    message = message ? message : '请尝试自己输入内容哦！';
 
                     $('.layout .content .chat .chat-body .messages').append(
                     `<div class="message-item ` + type + `">
@@ -51,62 +51,82 @@
         //提交聊天内容触发函数
         $('form#broadcast').submit(function (event) {
             time = get_time();
-            if ($('#broadcast_data').val()) {
-                //触发查课表函数
-                if((($('#broadcast_data').val()).match("2017级"))||(($('#broadcast_data').val()).match("2018级"))||(($('#broadcast_data').val()).match("2019级"))) {
-                        socket.emit('my_broadcast_table_event', {data: $('#broadcast_data').val(),userId :'123',check:$("#logout_username").text()});
-                        return false;
-                }
-                //触发图灵回复
-
-            }
             //HTML添加聊天内容
             if ($("#logout_username").text() == "")
                 SohoExamle.Message.add($('#broadcast_data').val(), "匿名用户", time, 'outgoing-message');
             else
                 SohoExamle.Message.add($('#broadcast_data').val(), $("#logout_username").text(), time, 'outgoing-message');
 
-            $('#broadcast_data').val('');
-            var special_ana = ["1.验证码识别 2.汉字识别(只能输入1或者2哦！)"];
-            var special_que = ["1","2"]
-            //获取人和机器人说的最后一句话
-            var last_robot = "";
-            var last_people = "";
-            var re=/[^\u4e00-\u9fa5a-zA-Z0-9]/g;
-            if($(".message-item:last").children('.message-content').length>0)
-                last_robot=$(".message-item:last").children('.message-content').text();
-            if($(".outgoing-message").eq(-1).length>0) {
-                console.log("haha");
-                last_people=$(".outgoing-message").eq(-1).children('.message-content').text();
-                console.log(last_people)
-            }
-            //最后一个是人说的
-            if(last_robot==last_people)
-                last_robot=$(".message-item").eq(-2).children('.message-content').text();
-            //不是特殊问题才会触发图灵机器人
-            // console.log(special_que.indexOf(last_people.replace(re,"")) == -1);
-            // console.log(special_ana.indexOf(last_robot) == -1);
-            last_people = iGetInnerText(last_people);
-            console.log(last_people);
-            if(special_ana.indexOf(last_robot) == -1 && special_que.indexOf(last_people) == -1) {
-                socket.emit('my_broadcast_event', {
-                    data: last_people,
-                    userId: '123',
-                    check: $("#logout_username").text()
-                });
-                return false;
-            }
-            time2= get_time();
-            cpoy_src=$(".outgoing-message").eq(-2).children(".message-content1").children("#img_size").attr("src");
-            cpoy_src = cpoy_src.substring( cpoy_src.indexOf(",")+1);
+            // 检测聊天框
+            if ($('#broadcast_data').val()) {
+                //触发查课表函数
+                if ((($('#broadcast_data').val()).match("2017级")) || (($('#broadcast_data').val()).match("2018级")) || (($('#broadcast_data').val()).match("2019级"))) {
+                    console.log("nihao");
+                    socket.emit('my_broadcast_table_event', {
+                        data: $('#broadcast_data').val(),
+                        userId: '123',
+                        check: $("#logout_username").text()
+                    });
+                    $('#broadcast_data').val('');
+                }
+                else{
+                    var special_ana = ["1.验证码识别2.汉字识别(只能输入1或者2哦！)","请输入地址"];
+                    var special_que = ["-地图"]
+                    //获取人和机器人说的最后一句话
+                    var last_robot = "";
+                    var last_people = "";
+                    var re=/[^\u4e00-\u9fa5a-zA-Z0-9]/g;
+                    if($(".message-item:last").children('.message-content').length>0)
+                        last_robot=$(".message-item:last").children('.message-content').text();
+                    if($(".outgoing-message").eq(-1).length>0) {
+                        last_people=$(".outgoing-message").eq(-1).children('.message-content').text();
+                    }
 
-            if(last_people.replace(re,"")=="1") {
-                 socket.emit('tran_img_event', {data: cpoy_src, userId: '123', check: $("#logout_username").text()});
-             }
-             else if(last_people.replace(re,"")=="2")
-                 socket.emit('hand_write_event', {data: cpoy_src, userId: '123', check: $("#logout_username").text()});
-             else
-                 SohoExamle.Message.add(special_ana[0],'小软棉',time2, '');
+                    //最后一个是人说的
+                    if(last_robot==last_people)
+                        last_robot=$(".message-item").eq(-2).children('.message-content').text();
+
+                    //不是特殊问题才会触发图灵机器人
+                    last_people = iGetInnerText(last_people);
+                    last_robot = iGetInnerText(last_robot);
+                    console.log(last_people);
+                    console.log(last_robot);
+                    if(special_ana.indexOf(last_robot) == -1 && last_people.indexOf(special_que[0]) == -1) {
+                        socket.emit('my_broadcast_event', {
+                            data: last_people,
+                            userId: '123',
+                            check: $("#logout_username").text()
+                        });
+                        $('#broadcast_data').val('');
+                        console.log("图灵")
+                    }
+                    else{
+                        time2= get_time();
+
+
+                        if(last_people.replace(re,"")=="1") {
+                            cpoy_src=$(".outgoing-message").eq(-2).children(".message-content1").children("#img_size").attr("src");
+                            cpoy_src = cpoy_src.substring( cpoy_src.indexOf(",")+1);
+                             socket.emit('tran_img_event', {data: cpoy_src, userId: '123', check: $("#logout_username").text()});
+                         }
+                         else if(last_people.replace(re,"")=="2"){
+                             cpoy_src=$(".outgoing-message").eq(-2).children(".message-content1").children("#img_size").attr("src");
+                             cpoy_src = cpoy_src.substring( cpoy_src.indexOf(",")+1);
+                             socket.emit('hand_write_event', {data: cpoy_src, userId: '123', check: $("#logout_username").text()})
+                         }
+
+                         else if(last_people.indexOf(special_que[0])) {
+                            socket.emit('map_event', {data: last_people.substring(0, last_people.indexOf("-"))});
+                            // SohoExamle3.Message.add("hahha", $("#logout_username").text(), time, '');
+
+
+                        }
+                         else
+                             SohoExamle.Message.add(special_ana[0],'小软棉',time2, '');
+                         $('#broadcast_data').val('');
+                    }
+                }
+            }
             // // SohoExamle.Message.add(userId, 'outgoing-message');
             // //     input.val('');
             // // } else {
@@ -116,11 +136,24 @@
         });
         //获取图灵回复内容后将内容添加到HTML
         socket.on('my_response', function(msg) {
+
             SohoExamle.Message.add(msg.data,msg.username,msg.time2, '');//回答
+            if (msg.data.match("http:")) {
+                $('.message-content').click(function () {
+                    window.open(msg.data, '_blank')
+                });
+            }
+
             // if (cb)
             //     cb();
         });
-
+        socket.on('my_response2', function(msg) {
+        SohoExamle3.Message.add("hahha", $("#logout_username").text(), time, '');
+        $('.img_size').click(function () {
+                                // window.location.href = '../../../test';
+                                window.open('../../../test',"_blank");
+                            });
+         });
     });
 // outgoing-message'
     // $(document).on('submit', '.layout .content .chat .chat-footer form', function (e) {
@@ -361,7 +394,6 @@ var grade2=document.getElementsByClassName("grade2")[0];
 var point2=document.getElementsByClassName("point2")[0];
 grade2.onchange=function(){
     var text=grade2.options[grade2.selectedIndex].text;
-    // console.log(text)
 
     if(text=="2017级"){
         point2.style.display="block";
@@ -397,7 +429,7 @@ var SohoExamle1 = {
                     console.log(message);
 
                     type = type ? type : '';
-                    message = message ? message : '收到（假的）';
+                    message = message ? message : '请尝试输入内容哦！';
 
                     $('.layout .content .chat .chat-body .messages').append(
                     `<div class="message-item ` + type + `">
@@ -460,11 +492,11 @@ socket.on('add_histiry_event2', function(msg, cb) {
 $('#submition').click(function () {
     var grades = document.getElementById("selectgrade");
     var classes = document.getElementById("selectclass");
-    var dirctions = document.getElementById("selectdirection");
+    var directions = document.getElementById("selectdirection");
     var weekdays = document.getElementById("selectday");
     var text1 = grades.options[grades.selectedIndex].text;
     var text2 = classes.options[classes.selectedIndex].text;
-    var text3 = dirctions.options[dirctions.selectedIndex].text;
+    var text3 = directions.options[directions.selectedIndex].text;
     var text4 = weekdays.options[weekdays.selectedIndex].text;
 
     socket.emit('get_push_message', {text1: text1,text2: text2,text3: text3,text4:text4,check:$("#logout_username").text()});
@@ -472,32 +504,31 @@ $('#submition').click(function () {
 /*********PC端用户登录后查询课表******结束*****/
 
 /*********手机端用户登录后查询课表******开始*****/
-var leftphone = document.getElementById("leftphone");
 
 $('#phonesubmition').click(function () {
     var grades = document.getElementById("phonegrade");
     var classes = document.getElementById("phoneclass");
-    var dirctions = document.getElementById("phonedirection");
+    var directions = document.getElementById("phonedirection");
     var weekdays = document.getElementById("phoneday");
     var text1 = grades.options[grades.selectedIndex].text;
     var text2 = classes.options[classes.selectedIndex].text;
-    var text3 = dirctions.options[dirctions.selectedIndex].text;
+    var text3 = directions.options[directions.selectedIndex].text;
     var text4 = weekdays.options[weekdays.selectedIndex].text;
 
-    $(leftphone).css("display","none");
+    intr.style.display="none";
 
     socket.emit('get_push_message', {text1: text1,text2: text2,text3: text3,text4:text4,check:$("#logout_username").text()});
 });
 /*********手机端用户登录后查询课表******结束*****/
 var SohoExamle2 = {
         Message: {
-            add: function (message, type) {
+            add: function (message, time, type) {
                 var chat_body = $('.layout .content .chat .chat-body');
 
                 if (chat_body.length > 0) {
 
                     type = type ? type : '';
-                    message = message ? message : '收到（假的）';
+                    message = message ? message : '请尝试输入内容哦！';
 
                     $('.layout .content .chat .chat-body .messages').append(
                     `<div class="message-item ` + type + `">
@@ -527,7 +558,7 @@ var SohoExamle2 = {
         }
 };
 socket.on('push_table_event', function(msg, cb) {
-    SohoExamle2.Message.add(msg.data,'');//回答
+    SohoExamle2.Message.add(msg.data, msg.time,'');//回答
     if (cb)
         cb();
 });
@@ -538,3 +569,49 @@ function iGetInnerText(testStr) {
         resultStr = resultStr.replace(/[\r\n]/g, ""); //去掉回车换行
         return resultStr;
     }
+
+
+
+// 地图图片
+var SohoExamle3 = {
+        Message: {
+            add: function (message,username,time,type) {
+                var chat_body = $('.layout .content .chat .chat-body');
+
+                if (chat_body.length > 0) {
+                    console.log(message);
+
+                    type = type ? type : '';
+                    message = message ? message : '请尝试输入内容哦！';
+
+                    $('.layout .content .chat .chat-body .messages').append(
+                    `<div class="message-item ` + type + `">
+                        <div class="message-avatar">
+                            <figure class="avatar">
+                                <img src="/static/dist/media/img/` + (type == 'outgoing-message' ? 'women_avatar5.jpg' : 'man_avatar3.jpg') + `" class="rounded-circle">
+                            </figure>
+                            <div>
+                                <h5>` + (type == 'outgoing-message' ?username:'小软棉') + `</h5>
+                                <div class="time">`+time+ ` ` + (type == 'outgoing-message' ? '<i class="ti-check"></i>' : '') + `</div>
+                            </div>
+                        </div>
+                        <div class="message-content1">
+                        <img class="img_size" src="/static/dist/media/img/map.png">
+                           </div>
+
+                    </div>`);
+
+                    setTimeout(function () {
+                        chat_body.scrollTop(chat_body.get(0).scrollHeight, -1).niceScroll({
+                            cursorcolor: 'rgba(66, 66, 66, 0.20)',
+                            cursorwidth: "4px",
+                            cursorborder: '0px'
+                        }).resize();
+                    }, 200);
+                }
+            }
+        }
+
+    };
+
+

@@ -32,16 +32,13 @@ def class_schedule_query(grade,class1,this_week,day):   #grade是用户所在的
 
 
 #查询2017级分方向之后的课程表
-def class_schedule_query1(grade,class1,this_week,day,direction):   #grade是用户所在的年级,class1是用户所在的班级,week是第几周,day是周几
+def class_schedule_query1(grade,this_week,day,direction):   #grade是用户所在的年级,class1是用户所在的班级,week是第几周,day是周几
     db = pymysql.connect(host='localhost',user='root',database='user_information',charset='utf8')
     cursor = db.cursor()
-    sql = "SELECT * FROM class_schedule WHERE grade='%s' and class='%s' and day='%s' and direction='%s'" % (grade, class1, day,direction)
+    sql = "SELECT * FROM class_schedule WHERE grade='%s' and day='%s' and direction='%s'" % (grade,day,direction)
     try:
         cursor.execute(sql)  # 执行SQL语句
         results=cursor.fetchall()  # 获取所有记录元组
-        print('服了')
-        print(results)
-        print('服了')
         result1=[]
         print(len(results))
         for i in range(len(results)):

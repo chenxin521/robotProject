@@ -27,7 +27,7 @@
 <body class="for_backcolor">
 
 <div class="introduction">
-    <div class="left_img2" style="border-right: 1px rgba(189,190,187,0.62) solid">
+    <div class="left_img2" style="border-right: 1px rgba(189,190,187,0.62) solid" id="leftphone">
         <li class="square">
             <div class="inside-square1">
                 <p style="font-family: 幼圆;font-size:20px;font-weight: bold;">
@@ -42,18 +42,26 @@
                         <li>脑筋急转弯<span>&nbsp</span>"说个脑筋急转弯"</li>
                         <li>聊天对话<span>&nbsp</span>"你吃了吗"</li>
                         <li>快递查询<span>&nbsp</span>"西红柿鸡蛋怎么做"</li>
+                        <li>验证码识别<span>&nbsp</span>"发送验证码"</li>
+                        <li>汉字识别<span>&nbsp</span>"发送手写汉字"</li>
+                        <li>地图查询<span>&nbsp</span>"北京-地图"</li>
+
                         <li>中英互译<span>&nbsp</span>"苹果的英文"</li>
                         <li>笑话大全<span>&nbsp</span>"讲个笑话"</li>
                         <li>星座运势<span>&nbsp</span>"双子座运势"</li>
                         <li>脑筋急转弯<span>&nbsp</span>"说个脑筋急转弯"</li>
                         <li>聊天对话<span>&nbsp</span>"你吃了吗"</li>
                         <li>菜谱查询<span>&nbsp</span>"西红柿鸡蛋怎么做"</li>
+                        <li>验证码识别<span>&nbsp</span>"发送验证码"</li>
+                        <li>汉字识别<span>&nbsp</span>"发送手写汉字"</li>
+                        <li>地图查询<span>&nbsp</span>"北京-地图"</li>
                     </ul>
                 </div>
             </div>
         </li>
         <li class="square4">
-            <div class="square-box1" id="phonesubmition">推送课表，请选择</div>
+<!--            <button onclick="window.location.href='{{ url_for("test")}}'">点我啊</button>-->
+            <div class="square-box1" id="phonesubmition">点我，推送课表！</div>
             <div class="square-box2">
                 <div class="inside-square6" style="width: 70px;">
                     <select class="grade" id="phonegrade">
@@ -62,7 +70,7 @@
                         <option values="3">2017级</option>
                     </select>
                 </div>
-                <div class="inside-square6 class1" style="width: 40px;margin-left: 10px;">
+                <div class="inside-square6 class1" style="width: 55px;padding-left: 10px;">
                     <select style="dispaly:block" id="phoneclass">
                         <option>1班</option>
                         <option>2班</option>
@@ -74,15 +82,15 @@
                         <option>8班</option>
                     </select>
                 </div>
-                <div class="inside-square6" style="width: 100px;">
-                    <select class="point" style="width: 100px;display:block;">
+                <div class="inside-square6 point" style="width: 70px;display:none;padding-left:10px;">
+                    <select style="width: 100%;" id="phonedirection">
                         <option>HTML5方向</option>
                         <option>JAVA与安卓方向</option>
                         <option>人工智能方向</option>
                         <option>软件测试方向</option>
                     </select>
                 </div>
-                <div class="inside-square6 class1" style="width: 40px;margin-left: 10px;">
+                <div class="inside-square6 class1" style="padding-left:10px; width: 40px;">
                     <select style="dispaly:block" id="phoneday">
                         <option>星期一</option>
                         <option>星期二</option>
@@ -638,18 +646,24 @@
                                 <li>脑筋急转弯<span>&nbsp</span>"说个脑筋急转弯"</li>
                                 <li>聊天对话<span>&nbsp</span>"你吃了吗"</li>
                                 <li>菜谱查询<span>&nbsp</span>"西红柿鸡蛋怎么做"</li>
+                                <li>验证码识别<span>&nbsp</span>"发送验证码"</li>
+                                <li>汉字识别<span>&nbsp</span>"发送手写汉字"</li>
+                                <li>地图查询<span>&nbsp</span>"北京-地图"</li>
                                 <li>中英互译<span>&nbsp</span>"苹果的英文"</li>
                                 <li>笑话大全<span>&nbsp</span>"讲个笑话"</li>
                                 <li>星座运势<span>&nbsp</span>"双子座运势"</li>
                                 <li>脑筋急转弯<span>&nbsp</span>"说个脑筋急转弯"</li>
                                 <li>聊天对话<span>&nbsp</span>"你吃了吗"</li>
                                 <li>菜谱查询<span>&nbsp</span>"西红柿鸡蛋怎么做"</li>
+                                <li>验证码识别<span>&nbsp</span>"发送验证码"</li>
+                                <li>汉字识别<span>&nbsp</span>"发送手写汉字"</li>
+                                <li>地图查询<span>&nbsp</span>"北京-地图"</li>
                             </ul>
                         </div>
                     </div>
                 </li>
                 <li class="square4" >
-                    <div class="square-box1" id="submition">推送课表，请选择</div>
+                    <div class="square-box1" id="submition">点我，推送课表！</div>
                     <div class="square-box2">
                         <div class="inside-square6" style="width: 70px;">
                             <select class="grade2"  id="selectgrade">
@@ -658,7 +672,7 @@
                                 <option values="3">2017级</option>
                             </select>
                         </div>
-                        <div class="inside-square6 class2" style="dispaly:block;width:40px;margin-left: 10px;">
+                        <div class="inside-square6 class2" style="dispaly:block;width:60px;padding-left: 10px;">
                             <select  id="selectclass">
                                 <option>1班</option>
                                 <option>2班</option>
@@ -670,15 +684,15 @@
                                 <option>8班</option>
                             </select>
                         </div>
-                        <div class="inside-square6 point2" style="width: 100px;display: none;margin-left: 10px;">
-                            <select style="width: 100px;display:block;"  id="selectdirection">
+                        <div class="inside-square6 point2" style="width: 80px;display: none;padding-left: 10px;">
+                            <select style="width: 100%;display:block;"  id="selectdirection">
                                 <option>HTML5方向</option>
                                 <option>JAVA与安卓方向</option>
                                 <option>人工智能方向</option>
                                 <option>软件测试方向</option>
                             </select>
                         </div>
-                        <div class="inside-square6 class2" style="dispaly:block;width:40px;margin-left: 10px;">
+                        <div class="inside-square6 class2" style="dispaly:block;width:40px;padding-left: 10px;">
                             <select  id="selectday">
                                 <option>星期一</option>
                                 <option>星期二</option>
@@ -1216,7 +1230,7 @@
                 <!-- ./ register -->
                 <form>
                     <div class="form-group">
-                        <input type="text" class="form-control" id="register_name" placeholder="用户名" required autofocus>
+                        <input type="text" class="form-control" id="register_name" placeholder="用户名(请输入英文名称)" required autofocus>
                     </div>
                     <div class="form-group">
                         <input type="text" class="form-control" id="register_id" placeholder="学号" required>

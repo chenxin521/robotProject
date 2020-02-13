@@ -7,7 +7,7 @@ var SohoExamle = {
                     console.log(message);
 
                     type = type ? type : '';
-                    message = message ? message : '收到（假的）';
+                    message = message ? message : '请尝试输入内容哦！';
 
                     $('.layout .content .chat .chat-body .messages').append(
                     `<div class="message-item ` + type + `">
@@ -134,7 +134,7 @@ var SohoExamle1 = {
                     console.log(message);
 
                     type = type ? type : '';
-                    message = message ? message : '收到（假的）';
+                    message = message ? message : '请尝试输入内容哦！';
 
                     $('.layout .content .chat .chat-body .messages').append(
                     `<div class="message-item ` + type + `">

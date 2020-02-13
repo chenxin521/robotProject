@@ -11,11 +11,12 @@ from project import user_record_mysql as recordMysql
 from project import hand_write_100 as hw
 from project import class_schedule_mysql as scheduleMysql
 from project import zyq
+from project import map
 from datetime import datetime
 import pymysql
 import datetime
 import re
-
+import numpy as np
 import time
 import math
 import base64
@@ -34,6 +35,14 @@ thread_lock = Lock()
 @app.route('/')
 def index():
     return render_template('index.html', async_mode=socketio.async_mode)
+
+
+@app.route("/test/",methods=['POST','GET'])
+def test():
+    return render_template('test.html')
+
+
+
 ##先留着
 # @socketio.on('my_broadcast_event', namespace='/test')
 # def test_broadcast_message(message):
@@ -48,14 +57,19 @@ def index():
 
 
 tuling='3d3fa6b66f72479eaa9c45be57b639e0'  #老师的
-#tuling='e238e5b6de7545fc886720c0d175cb79'    #自己的
+#tuling='e238e5b6de7545fc886720c0d175cb79'    #张琳的
+#tuling= 'b9c94835bf924281b681248828c006d1'  #陈鑫的
 api_url = "http://openapi.tuling123.com/openapi/api/v2"
 
+tulinglist = ['3d3fa6b66f72479eaa9c45be57b639e0','e238e5b6de7545fc886720c0d175cb79','b9c94835bf924281b681248828c006d1']
+counttuling = 0
+gurl = '3d3fa6b66f72479eaa9c45be57b639e0'
 
 @socketio.on('my_broadcast_event', namespace='/test')
 def get_message(message):
     time1=datetime.datetime.now()
-    print(message)
+    global counttuling
+    global gurl
     req = {
     "perception":
     {
@@ -68,15 +82,15 @@ def get_message(message):
         {
             "location":
             {
-                "city": "深圳",
-                "province": "广州",
+                "city": "河北",
+                "province": "石家庄",
                 "street": "XXX"
             }
         }
     },
     "userInfo":
     {
-        "apiKey": '3d3fa6b66f72479eaa9c45be57b639e0',
+        "apiKey": gurl,
         "userId": message['userId']
     }
     }
@@ -85,21 +99,33 @@ def get_message(message):
     response = urllib.request.urlopen(http_post)
     response_str = response.read().decode('utf8')
     response_dic = json.loads(response_str)
-
+    print(response_dic)
     # 询问某道菜怎么做时，直接返回url
-    if "怎么做" in message['data']:
-        results_text = response_dic['results'][0]['values']['url']
-    else:
+    if "text" in response_dic['results'][0]['values']:
         results_text = response_dic['results'][0]['values']['text']
+    elif "url" in response_dic['results'][0]['values']:
+        results_text = response_dic['results'][0]['values']['url']
+    # elif "怎么做" in message['data']:
+    #     results_text = response_dic['results'][0]['values']['url']
+    else:
+        results_text="换一个问题吧！"
+
+
+    if(results_text == '请求次数超限制！'):
+        if(counttuling < len(tulinglist)):
+            counttuling += 1
+            gurl = tulinglist[counttuling]
+            results_text = '出错了！请再次输入！'
+        else:
+            results_text = '亲，今日小软棉聊天次数已用完！但是亲仍可以继续查询课表和识别图片呦！欢迎明天再来哦~'
+
+
 
 
     session['receive_count'] = session.get('receive_count', 0) + 1
     time2 = datetime.datetime.now()
 
 
-
-    # judge=get_login_message(message)
-    # if judge>0:
     if(message['check']!=""):
         emit('my_response',
              {'question': message['data'], 'username': message['check'], 'time1': time1.strftime('%Y-%m-%d %H:%M:%S'),
@@ -111,6 +137,7 @@ def get_message(message):
              {'question': message['data'], 'username': '匿名用户', 'time1': time1.strftime('%Y-%m-%d %H:%M:%S'),
               'time2': time2.strftime('%Y-%m-%d %H:%M:%S'), 'data': results_text, 'count': session['receive_count']}
              )
+
 @socketio.on('my_broadcast_table_event', namespace='/test')
 def get_table_message(message):
     time1 = datetime.datetime.now()
@@ -164,9 +191,8 @@ def get_table_message(message):
 @socketio.on('my_login_event', namespace='/test')
 def get_login_message(message):
     username, password = message["username"], message['password']
-    #print(type(password))
     return_password = informationMysql.information_query(username)
-    #print(type(return_password))
+
     if(len(return_password)==0):
         emit("login_backtips_event", {'data': '该账号未注册！'})
         return 0
@@ -181,8 +207,6 @@ def get_login_message(message):
             return 0#[0,False]
 
 # 得到登陆用户的聊天记录
-
-
 def get_record_message(username):
     db = pymysql.connect(host='localhost', user='root', database='user_information', charset='utf8')
     cursor = db.cursor()
@@ -236,8 +260,6 @@ def push_table_message(message):
     else:
         messages = grades + classes + days
 
-    time1 = datetime.datetime.now()
-
     # 计算现在是第几周的代码
     today = datetime.date.today()
     date1 = time.strptime('2019-09-02', "%Y-%m-%d")
@@ -267,13 +289,13 @@ def push_table_message(message):
         results_text = scheduleMysql.class_schedule_query(grade[0], class1[0], str(this_week), day[0])
 
     session['receive_count'] = session.get('receive_count', 0) + 1
-    time2 = datetime.datetime.now()
+    time1 = datetime.datetime.now()
 
     if(check!=''):
-        emit("push_table_event",{'data':results_text})
+        emit("push_table_event",{'data': results_text, 'time': time1.strftime('%Y-%m-%d %H:%M:%S')})
     else:
         warning = '亲，只有登录后才可以查询课表哦！'
-        emit('push_table_event',{'data': warning})
+        emit('push_table_event',{'data': warning, 'time': time1.strftime('%Y-%m-%d %H:%M:%S')})
 
 # 注册监听函数
 @socketio.on('my_register_event', namespace='/test')
@@ -301,11 +323,9 @@ def get_register_message(message):
         username, studentid, email, password = message['username'], message['studentid'], message['email'], message[
             'password']
         x = informationMysql.information_create(studentid, username, email, password)
-        # if x > 0:
-        #     emit("register_success_event", {'data': '注册成功'})
-        print('注册成功')
         emit("register_success_event", {'data': '注册成功'})
 
+from PIL import Image
 # 图片转换
 @socketio.on('tran_img_event', namespace='/test')
 def tran_img_event(message):
@@ -314,6 +334,10 @@ def tran_img_event(message):
     file = open('1.jpg', "wb")
     file.write(img)
     file.close()
+    img = Image.open('1.jpg')
+    output = img.resize((150, 30), Image.ANTIALIAS)
+    print(np.shape(output))
+    output.save('1.jpg')
     # img = Image.open(BytesIO(img))
     # img.thumbnail((100, 100))  # 图片压缩
     #out = com.main('1.jpg')
@@ -361,5 +385,20 @@ def tran_img_event(message):
              {'username': '匿名用户', 'time1': time1.strftime('%Y-%m-%d %H:%M:%S'),
               'time2': time2.strftime('%Y-%m-%d %H:%M:%S'), 'data': out},
              broadcast=True)
+
+
+@socketio.on('map_event', namespace='/test')
+def tran_img_event(message):
+    print(message["data"])
+    flag = map.baidu_map(message["data"])
+    time1 = datetime.datetime.now()
+    time2 = datetime.datetime.now()
+    if(flag==0):
+        emit('my_response',
+             {'username': '匿名用户', 'time1': time1.strftime('%Y-%m-%d %H:%M:%S'),
+              'time2': time2.strftime('%Y-%m-%d %H:%M:%S'), 'data': '输入地址不合法，请尝试重新输入！'},
+             )
+    else:
+        emit('my_response2')
 if __name__ == '__main__':
     socketio.run(app, debug=True,use_reloader=False)

@@ -24,7 +24,7 @@ def record_create(userId,inputText,tulingRespose,time1,time2):
     record_insert(userId,inputText,tulingRespose,time1,time2)
     db.close()
 
-def record_create1(userId,inputText,tulingRespose,time1,time2,flag):
+def record_create1(userId,inputText,tulingRespose,time1,time2):
     db = pymysql.connect(host='localhost',user='root',database='user_information',charset='utf8')
     cursor = db.cursor()
     #cursor.execute("DROP TABLE IF EXISTS record")3
@@ -36,21 +36,20 @@ def record_create1(userId,inputText,tulingRespose,time1,time2,flag):
                  TULINGRESPOSE VARCHAR(50),
                  TIME1 DATETIME,
                  TIME2 DATETIME,
-                 FLAG varchar(2),
                  primary key(ID)
                  ) default charset='utf8'"""
         cursor.execute(sql)
     except InternalError:#若报表已经存在的错误则直接插入,否则先创建表再插入
         pass
     print("1")
-    record_insert(userId,inputText,tulingRespose,time1,time2,flag)
+    record_insert(userId,inputText,tulingRespose,time1,time2)
     db.close()
 
 #给数据库中的用户信息表插入数据
-def record_insert(userId,inputText,tulingRespose,time1,time2,flag):
+def record_insert(userId,inputText,tulingRespose,time1,time2):
     db = pymysql.connect(host='localhost',user='root',database='user_information',charset='utf8')
     cursor = db.cursor()
-    sql = "INSERT INTO record(USERID,INPUTTEXT,TULINGRESPOSE,TIME1,TIME2,flag)VALUES ('%s','%s','%s','%s','%s','%s')"%(userId,inputText,tulingRespose,time1,time2,flag)
+    sql = "INSERT INTO record(USERID,INPUTTEXT,TULINGRESPOSE,TIME1,TIME2)VALUES ('%s','%s','%s','%s','%s')"%(userId,inputText,tulingRespose,time1,time2)
     #print(sql)
     print("a")
     cursor.execute(sql)  # 执行sql语句

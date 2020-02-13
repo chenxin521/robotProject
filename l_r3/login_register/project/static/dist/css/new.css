@@ -3,7 +3,9 @@ input{outline:none;}
 ul,li,ol{
     list-style: none;
 }
-
+select{
+	background-color: #ffffff;
+}
 .left_img{
     height:100%;
     width: 100%;
@@ -645,6 +647,11 @@ input[type="submit"] {
 
 #img_size{
 	float: right;
+	width: 50%;
+	height: 50%;
+	display: block;
+}
+.img_size{
 	width: 50%;
 	height: 50%;
 	display: block;
